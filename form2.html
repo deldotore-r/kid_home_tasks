@@ -39,6 +39,61 @@
             background: #f0f0f0;
         }
 
+        /* Alinha primeira coluna (Comportamento) à esquerda */
+        table tr > th:nth-child(1),
+        table tr > td:nth-child(1) {
+        text-align: left;
+        }
+
+        /* Centraliza segunda coluna (Pontos) */
+        table tr > th:nth-child(2),
+        table tr > td:nth-child(2) {
+        text-align: center;
+        }
+
+        /* Alinha terceira coluna (Quando acontecer) ao centro */
+        table tr > th:nth-child(3),
+        table tr > td:nth-child(3) {
+        text-align: center;
+        }
+
+         /* Alinha quarta coluna (Quando acontecer) ao centro */
+        table tr > th:nth-child(4),
+        table tr > td:nth-child(4) {
+        text-align: center;
+        }
+
+         /* Alinha quinta coluna (Quando acontecer) ao centro */
+        table tr > th:nth-child(5),
+        table tr > td:nth-child(5) {
+        text-align: center;
+        }
+
+        /* Alinha sexta coluna (Quando acontecer) ao centro */
+        table tr > th:nth-child(6),
+        table tr > td:nth-child(6) {
+        text-align: center;
+        }
+
+        /* Alinha sétima coluna (Quando acontecer) ao centro */
+        table tr > th:nth-child(7),
+        table tr > td:nth-child(7) {
+        text-align: center;
+        }
+
+         /* Alinha oitava coluna (Quando acontecer) ao centro */
+        table tr > th:nth-child(8),
+        table tr > td:nth-child(8) {
+        text-align: center;
+        }
+
+         /* Alinha nona coluna (Quando acontecer) ao centro */
+        table tr > th:nth-child(9),
+        table tr > td:nth-child(9) {
+        text-align: center;
+        }
+
+
         .penalty {
             color: #c21e1e;
         }
@@ -626,7 +681,7 @@
                 } else if (totalPontos < 30) {
                     valor = 0;
                 }
-                document.querySelector('input[name="valor_conquistado"]').value = 'R$ ' + valor.toFixed(2);
+                document.querySelector('input[name="valor_conquistado"]').value = '€ ' + valor.toFixed(2);
 
                 const preco = Number(document.querySelector('input[name="preco"]').value) || 0;
                 const ja_tenho = Number(document.querySelector('input[name="ja_tenho"]').value) || 0;
