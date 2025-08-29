@@ -1,3 +1,7 @@
+Segue o código HTML completo do seu sistema de pontos, com o cálculo automático corrigido para somar corretamente as
+tarefas, atitudes positivas e penalidades, além de atualizar totais e valores da mesada, tudo integrado e funcional:
+
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -39,60 +43,21 @@
             background: #f0f0f0;
         }
 
-        /* Alinha primeira coluna (Comportamento) à esquerda */
-        table tr > th:nth-child(1),
-        table tr > td:nth-child(1) {
-        text-align: left;
+        /* Colunas alinhamentos */
+        table tr>th:nth-child(1),
+        table tr>td:nth-child(1) {
+            text-align: left;
         }
 
-        /* Centraliza segunda coluna (Pontos) */
-        table tr > th:nth-child(2),
-        table tr > td:nth-child(2) {
-        text-align: center;
+        table tr>th:nth-child(2),
+        table tr>td:nth-child(2) {
+            text-align: center;
         }
 
-        /* Alinha terceira coluna (Quando acontecer) ao centro */
-        table tr > th:nth-child(3),
-        table tr > td:nth-child(3) {
-        text-align: center;
+        table tr>th:nth-child(n+3),
+        table tr>td:nth-child(n+3) {
+            text-align: center;
         }
-
-         /* Alinha quarta coluna (Quando acontecer) ao centro */
-        table tr > th:nth-child(4),
-        table tr > td:nth-child(4) {
-        text-align: center;
-        }
-
-         /* Alinha quinta coluna (Quando acontecer) ao centro */
-        table tr > th:nth-child(5),
-        table tr > td:nth-child(5) {
-        text-align: center;
-        }
-
-        /* Alinha sexta coluna (Quando acontecer) ao centro */
-        table tr > th:nth-child(6),
-        table tr > td:nth-child(6) {
-        text-align: center;
-        }
-
-        /* Alinha sétima coluna (Quando acontecer) ao centro */
-        table tr > th:nth-child(7),
-        table tr > td:nth-child(7) {
-        text-align: center;
-        }
-
-         /* Alinha oitava coluna (Quando acontecer) ao centro */
-        table tr > th:nth-child(8),
-        table tr > td:nth-child(8) {
-        text-align: center;
-        }
-
-         /* Alinha nona coluna (Quando acontecer) ao centro */
-        table tr > th:nth-child(9),
-        table tr > td:nth-child(9) {
-        text-align: center;
-        }
-
 
         .penalty {
             color: #c21e1e;
@@ -100,6 +65,10 @@
 
         .reward {
             color: #15620e;
+        }
+
+        input[type="checkbox"] {
+            vertical-align: middle;
         }
 
         input[type="number"] {
@@ -116,6 +85,12 @@
 
         input[type="text3"] {
             width: 40px;
+            vertical-align: middle;
+            box-sizing: border-box;
+        }
+
+         input[type="text4"] {
+            width: 60px;
             vertical-align: middle;
             box-sizing: border-box;
         }
@@ -154,9 +129,7 @@
         .container {
             max-width: 900px;
             margin: 0 auto;
-            /* centraliza horizontalmente */
             padding: 0 16px;
-            /* espaçamento lateral */
             box-sizing: border-box;
         }
 
@@ -171,12 +144,12 @@
             border: none;
             padding: 4px 8px;
             vertical-align: middle;
-            text-align: left;
+            text-align: center;
         }
 
         .contador-mesada-table input {
             margin-left: 10px;
-            width: 50px;
+            width: 60px;
             box-sizing: border-box;
         }
     </style>
@@ -239,13 +212,13 @@
                 <tr>
                     <td>Guardar a louça (se houver louça lavada na máquina)</td>
                     <td class="reward">+5</td>
-                    <td><input type="checkbox" name="louça_seg" /></td>
-                    <td><input type="checkbox" name="louça_ter" /></td>
-                    <td><input type="checkbox" name="louça_qua" /></td>
-                    <td><input type="checkbox" name="louça_qui" /></td>
-                    <td><input type="checkbox" name="louça_sex" /></td>
-                    <td><input type="checkbox" name="louça_sab" /></td>
-                    <td><input type="checkbox" name="louça_dom" /></td>
+                    <td><input type="checkbox" name="louca_seg" /></td>
+                    <td><input type="checkbox" name="louca_ter" /></td>
+                    <td><input type="checkbox" name="louca_qua" /></td>
+                    <td><input type="checkbox" name="louca_qui" /></td>
+                    <td><input type="checkbox" name="louca_sex" /></td>
+                    <td><input type="checkbox" name="louca_sab" /></td>
+                    <td><input type="checkbox" name="louca_dom" /></td>
                 </tr>
                 <tr>
                     <td>Levar o lixo</td>
@@ -578,39 +551,37 @@
                             </tr>
                             <tr>
                                 <td>Valor conquistado:</td>
-                                <td><input type="text3" name="valor_conquistado" readonly></td>
+                                <td><input type="text4" name="valor_conquistado" readonly></td>
                             </tr>
                             <tr>
                                 <td>Dinheiro acumulado:</td>
-                                <td><input type="text3" name="dinheiro_acumulado"></td>
+                                <td><input type="text4" name="dinheiro_acumulado"></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-        <h2>🎯 Meu Objetivo de Compra</h2>
-        <p>
-            O que quero comprar: <input type="text" name="objetivo" />
-        </p>
-        <table class="contador-mesada-table" role="presentation" aria-label="Meu Objetivo de Compra">
-            <tbody>
-                <tr>
-                    <td>Preço: €</td>
-                    <td><input type="number" name="preco" step="0.01" /></td>
-                </tr>
-                <tr>
-                    <td>Já tenho: €</td>
-                    <td><input type="number" name="ja_tenho" step="0.01" /></td>
-                </tr>
-                <tr>
-                    <td>Ainda preciso: €</td>
-                    <td><input type="number" name="ainda_preciso" readonly /></td>
-                </tr>
-            </tbody>
-        </table>
-
-
+            <h2>🎯 Meu Objetivo de Compra</h2>
+            <p>
+                O que quero comprar: <input type="text2" name="objetivo" />
+            </p>
+            <table class="contador-mesada-table" role="presentation" aria-label="Meu Objetivo de Compra">
+                <tbody>
+                    <tr>
+                        <td>Preço: €</td>
+                        <td><input type="number" name="preco" step="0.01" /></td>
+                    </tr>
+                    <tr>
+                        <td>Já tenho: €</td>
+                        <td><input type="number" name="ja_tenho" step="0.01" /></td>
+                    </tr>
+                    <tr>
+                        <td>Ainda preciso: €</td>
+                        <td><input type="number" name="ainda_preciso" readonly /></td>
+                    </tr>
+                </tbody>
+            </table>
 
             <h2>📋 Regras Importantes</h2>
             <ol class="help">
@@ -623,87 +594,104 @@
         <script>
             function calcularPontos() {
                 const tarefas = [
-                    { name: 'cama_', value: 3 },
-                    { name: 'quart_', value: 5 },
-                    { name: 'louça_', value: 5 },
-                    { name: 'lixo_', value: 3 },
-                    { name: 'varrer_', value: 4 },
-                    { name: 'sapatos_', value: 3 },
-                    { name: 'dobrar_', value: 4 },
-                    { name: 'banho_', value: 2 },
-                    { name: 'escova_', value: 2 },
-                    { name: 'licao_', value: 5 },
-                    { name: 'mochila_', value: 2 }
+                    { name: "cama_", value: 3 },
+                    { name: "quart_", value: 5 },
+                    { name: "louca_", value: 5 },
+                    { name: "lixo_", value: 3 },
+                    { name: "varrer_", value: 4 },
+                    { name: "sapatos_", value: 3 },
+                    { name: "dobrar_", value: 4 },
+                    { name: "banho_", value: 2 },
+                    { name: "escova_", value: 2 },
+                    { name: "licao_", value: 5 },
+                    { name: "mochila_", value: 2 },
+                    { name: "cachorras_", value: 3 },
                 ];
+
                 const positivas = [
-                    { name: 'ajudar', value: 5 },
-                    { name: 'gentil', value: 3 },
-                    { name: 'obedecer', value: 3 },
-                    { name: 'verdade', value: 5 },
-                    { name: 'pets', value: 3 }
+                    { name: "ajudar", value: 5 },
+                    { name: "gentil", value: 3 },
+                    { name: "obedecer", value: 3 },
+                    { name: "verdade", value: 5 },                    
                 ];
+
                 const penalidades = [
-                    { name: 'mentir', value: -10 },
-                    { name: 'desrespeitar', value: -8 },
-                    { name: 'brigar', value: -5 },
-                    { name: 'naolic', value: -8 },
-                    { name: 'baguncado', value: -5 },
-                    { name: 'birra', value: -5 },
-                    { name: 'eletronicos', value: -7 },
-                    { name: 'no_escova', value: -3 }
+                    { name: "mentir", value: -10 },
+                    { name: "desrespeitar", value: -8 },
+                    { name: "brigar", value: -5 },
+                    { name: "naolic", value: -8 },
+                    { name: "baguncado", value: -5 },
+                    { name: "birra", value: -5 },
+                    { name: "eletronicos", value: -7 },
+                    { name: "no_escova", value: -3 },
                 ];
 
                 let totalPontos = 0;
-                tarefas.forEach(item => {
-                    ['seg', 'ter', 'qua', 'qui', 'sex', 'sab', 'dom'].forEach(dia => {
+
+                tarefas.forEach((item) => {
+                    ["seg", "ter", "qua", "qui", "sex", "sab", "dom"].forEach((dia) => {
                         const el = document.querySelector(`input[name="${item.name}${dia}"]`);
                         if (el && el.checked) totalPontos += item.value;
                     });
                 });
-                positivas.forEach(item => {
+
+                positivas.forEach((item) => {
                     for (let i = 1; i <= 7; i++) {
                         const el = document.querySelector(`input[name="${item.name}${i}"]`);
                         if (el && el.checked) totalPontos += item.value;
                     }
                 });
-                penalidades.forEach(item => {
+
+                penalidades.forEach((item) => {
                     for (let i = 1; i <= 7; i++) {
                         const el = document.querySelector(`input[name="${item.name}${i}"]`);
                         if (el && el.checked) totalPontos += item.value;
                     }
                 });
+
+                // Atualiza total geral e pontos da semana
                 document.querySelector('input[name="total_pontos"]').value = totalPontos;
                 document.querySelector('input[name="pontos_semana"]').value = totalPontos;
 
+                // Atualiza pontos diários (somente tarefas diárias)
+                ["seg", "ter", "qua", "qui", "sex", "sab", "dom"].forEach((dia) => {
+                    let somaDia = 0;
+                    tarefas.forEach((item) => {
+                        const el = document.querySelector(`input[name="${item.name}${dia}"]`);
+                        if (el && el.checked) somaDia += item.value;
+                    });
+                    const campoDia = document.querySelector(`input[name="${dia}_pontos"]`);
+                    if (campoDia) campoDia.value = somaDia;
+                });
+
+                // Calcula valor da mesada
                 let valor = 0;
                 if (totalPontos >= 50) {
                     valor = 10 + Math.floor((totalPontos - 50) / 10) * 2;
                 } else if (totalPontos < 30) {
                     valor = 0;
                 }
-                document.querySelector('input[name="valor_conquistado"]').value = '€ ' + valor.toFixed(2);
+                document.querySelector('input[name="valor_conquistado"]').value = "€ " + valor.toFixed(2);
 
+                // Calcula quanto falta para o objetivo de compra
                 const preco = Number(document.querySelector('input[name="preco"]').value) || 0;
                 const ja_tenho = Number(document.querySelector('input[name="ja_tenho"]').value) || 0;
                 const ainda_preciso = preco - ja_tenho;
-                document.querySelector('input[name="ainda_preciso"]').value = ainda_preciso > 0 ? ainda_preciso.toFixed(2) : '0.00';
-
-                ['seg', 'ter', 'qua', 'qui', 'sex', 'sab', 'dom'].forEach(dia => {
-                    let pontosDia = 0;
-                    tarefas.forEach(item => {
-                        const el = document.querySelector(`input[name="${item.name}${dia}"]`);
-                        if (el && el.checked) pontosDia += item.value;
-                    });
-                    const campoDia = document.querySelector(`input[name="${dia}_pontos"]`);
-                    if (campoDia) campoDia.value = pontosDia;
-                });
+                document.querySelector('input[name="ainda_preciso"]').value =
+                    ainda_preciso > 0 ? ainda_preciso.toFixed(2) : "0.00";
             }
 
-            document.querySelectorAll('input[type="checkbox"], input[type="number"], input[type="text"]').forEach(el => {
-                el.addEventListener('change', calcularPontos);
+            document.querySelectorAll("input[type=checkbox], input[type=number], input[type=text2]").forEach((el) => {
+                el.addEventListener("change", calcularPontos);
             });
         </script>
     </div>
 </body>
 
 </html>
+```
+
+Esse código é completo e pronto para uso: toda alteração nas checkboxes e nos inputs de valores atualizará
+automaticamente a soma de pontos, o valor da mesada e o progresso do objetivo financeiro.
+
+Caso deseje, posso ajudar a personalizar, adicionar validações ou qualquer outra funcionalidade.
