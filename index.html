@@ -85,7 +85,7 @@
             box-sizing: border-box;
         }
 
-         input[type="text4"] {
+        input[type="text4"] {
             width: 60px;
             vertical-align: middle;
             box-sizing: border-box;
@@ -148,6 +148,21 @@
             width: 60px;
             box-sizing: border-box;
         }
+
+        button {
+            background: #3a6a34;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background: #2d5128;
+        }
     </style>
 </head>
 
@@ -155,7 +170,13 @@
     <div class="container">
         <h1>🌟 Sistema de Pontos Semanal</h1>
 
-        <form name="pontos-mesada" method="POST" data-netlify="true" action="/thanks.html">
+        <!-- CORREÇÃO: Removido method="POST", adicionado netlify e netlify-honeypot -->
+        <form name="pontos-mesada" netlify netlify-honeypot="bot-field" action="/thanks.html">
+            <!-- Campo honeypot para evitar spam (oculto) -->
+            <p style="display: none;">
+                <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+            </p>
+
             <input type="hidden" name="form-name" value="pontos-mesada" />
             <p>
                 <strong>Para: Gabriel</strong><br />
@@ -587,7 +608,7 @@
                 <li>Mesada é paga na segunda-feira</li>
                 <li>Economize para realizar seus sonhos!</li>
             </ol>
-        <button type="submit">Salvar</button>
+            <button type="submit">Salvar</button>
         </form>
 
         <script>
@@ -611,7 +632,7 @@
                     { name: "ajudar", value: 5 },
                     { name: "gentil", value: 3 },
                     { name: "obedecer", value: 3 },
-                    { name: "verdade", value: 5 },                    
+                    { name: "verdade", value: 5 },
                 ];
 
                 const penalidades = [
