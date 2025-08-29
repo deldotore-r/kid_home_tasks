@@ -154,7 +154,9 @@
 <body>
     <div class="container">
         <h1>🌟 Sistema de Pontos Semanal</h1>
-        <form>
+
+        <form name="pontos-mesada" method="POST" data-netlify="true">
+            <input type="hidden" name="form-name" value="pontos-mesada" />
             <p>
                 <strong>Para: Gabriel</strong><br />
                 <strong>Semana começando em:</strong>
@@ -585,6 +587,7 @@
                 <li>Mesada é paga na segunda-feira</li>
                 <li>Economize para realizar seus sonhos!</li>
             </ol>
+        <button type="submit">Salvar</button>
         </form>
 
         <script>
