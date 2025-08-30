@@ -91,6 +91,13 @@
             box-sizing: border-box;
         }
 
+        /* Estilo para campos desabilitados */
+        input:disabled {
+            background-color: #eeeeee;
+            cursor: not-allowed;
+        }
+
+
         .flex {
             display: flex;
             gap: 16px;
@@ -153,9 +160,8 @@
 
 <body>
     <div class="container">
-        <h1>🌟 Sistema de Pontos Semanal</h1>
+        <h1 id="page-title">🌟 Sistema de Pontos Semanal</h1>
 
-        <!-- O formulário agora é uma div. O salvamento é automático via JavaScript. -->
         <div id="pontos-form">
             <p>
                 <strong>Para: Gabriel</strong>
@@ -612,9 +618,26 @@
         const database = firebase.database();
         const dataRef = database.ref('formData');
 
-        let isUpdatingFromFirebase = false; // Flag to prevent feedback loops
+        let isUpdatingFromFirebase = false;
 
-        // --- LÓGICA DE CÁLCULO (A MESMA DE ANTES) ---
+        // --- LÓGICA DE PERMISSÃO ---
+        function applyPermissions() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const user = urlParams.get('user');
+
+            if (user && user.toLowerCase() === 'gabriel') {
+                document.getElementById('page-title').textContent = '🌟 Sistema de Pontos (Modo Leitura)';
+                document.querySelectorAll('#pontos-form input').forEach(input => {
+                    // Deixa os campos de cálculo (readonly) como estão, desabilita os outros
+                    if (!input.readOnly) {
+                        input.disabled = true;
+                    }
+                });
+            }
+        }
+
+
+        // --- LÓGICA DE CÁLCULO ---
         function calcularPontos() {
             const tarefas = [
                 { name: "cama_", value: 3 }, { name: "quart_", value: 5 }, { name: "louca_", value: 5 },
@@ -681,13 +704,12 @@
 
         // --- LÓGICA DO FIREBASE ---
 
-        // 1. Função para salvar dados no Firebase
         function saveDataToFirebase() {
-            if (isUpdatingFromFirebase) return; // Não salva se a atualização veio do Firebase
+            if (isUpdatingFromFirebase) return;
 
             const formData = {};
             document.querySelectorAll('#pontos-form input').forEach(input => {
-                if (input.readOnly) return; // Não salva campos de cálculo (readonly)
+                if (input.readOnly) return;
 
                 const name = input.name;
                 if (input.type === 'checkbox') {
@@ -696,12 +718,11 @@
                     formData[name] = input.value;
                 }
             });
-            dataRef.set(formData); // 'set' substitui todos os dados.
+            dataRef.set(formData);
         }
 
-        // 2. Função para carregar dados do Firebase e preencher o formulário
         function loadDataFromFirebase(data) {
-            isUpdatingFromFirebase = true; // Ativa a flag
+            isUpdatingFromFirebase = true;
             for (const name in data) {
                 const input = document.querySelector(`#pontos-form input[name="${name}"]`);
                 if (input) {
@@ -712,27 +733,30 @@
                     }
                 }
             }
-            isUpdatingFromFirebase = false; // Desativa a flag
-            calcularPontos(); // Roda os cálculos após preencher os dados
+            isUpdatingFromFirebase = false;
+            calcularPontos();
         }
 
-        // 3. Adiciona "listeners" para salvar dados quando o usuário interagir
+        // --- INICIALIZAÇÃO ---
+
+        // Aplica as permissões ANTES de adicionar os listeners
+        applyPermissions();
+
         document.querySelectorAll('#pontos-form input').forEach(input => {
-            if (!input.readOnly) {
+            // Só adiciona listeners se o campo NÃO estiver desabilitado
+            if (!input.disabled && !input.readOnly) {
                 input.addEventListener('change', saveDataToFirebase);
                 if (input.type !== 'checkbox') {
-                    input.addEventListener('keyup', saveDataToFirebase); // Salva enquanto digita
+                    input.addEventListener('keyup', saveDataToFirebase);
                 }
             }
         });
 
-        // 4. "Escuta" por mudanças no Firebase em tempo real
         dataRef.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
                 loadDataFromFirebase(data);
             } else {
-                // Se não houver dados no Firebase, apenas calcula (formulário em branco)
                 calcularPontos();
             }
         });
