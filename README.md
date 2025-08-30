@@ -10,9 +10,6 @@
 
 <br>
 
-## 🎯 Sobre o Projeto
-
-... (o resto do seu README.md) ...
 
 
 # 🌟 Sistema de Pontos Semanal
