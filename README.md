@@ -10,10 +10,6 @@
 
 <br>
 
-
-
-# 🌟 Sistema de Pontos Semanal
-
 <br>
 
 ## 🎯 Sobre o Projeto
