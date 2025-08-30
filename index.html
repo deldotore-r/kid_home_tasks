@@ -6,7 +6,6 @@
     <title>Sistema de Pontos Semanal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
-        /* ... (todo o CSS permanece o mesmo, omitido para brevidade) ... */
         body {
             font-family: Arial, sans-serif;
             margin: 16px;
@@ -65,6 +64,7 @@
 
         input[type="checkbox"] {
             vertical-align: middle;
+            margin: 0 4px;
         }
 
         input[type="number"] {
@@ -75,12 +75,6 @@
 
         input[type="text2"] {
             width: 80px;
-            vertical-align: middle;
-            box-sizing: border-box;
-        }
-
-        input[type="text3"] {
-            width: 40px;
             vertical-align: middle;
             box-sizing: border-box;
         }
@@ -102,31 +96,6 @@
             flex-wrap: wrap;
         }
 
-        .sign {
-            width: 45%;
-        }
-
-        @media (max-width: 768px) {
-            .sign {
-                width: 100%;
-            }
-
-            table,
-            th,
-            td {
-                font-size: 14px;
-            }
-        }
-
-        .help {
-            font-size: 0.95em;
-            color: #444;
-        }
-
-        .objective input {
-            width: 140px;
-        }
-
         .container {
             max-width: 900px;
             margin: 0 auto;
@@ -145,7 +114,7 @@
             border: none;
             padding: 4px 8px;
             vertical-align: middle;
-            text-align: center;
+            text-align: left;
         }
 
         .contador-mesada-table input {
@@ -154,19 +123,38 @@
             box-sizing: border-box;
         }
 
-        #reset-button {
-            background: #c21e1e;
-            color: white;
+        .admin-button {
             border: none;
             padding: 12px 24px;
             font-size: 16px;
             border-radius: 4px;
             cursor: pointer;
             margin-top: 20px;
+            margin-right: 10px;
+        }
+
+        #reset-button {
+            background: #c21e1e;
+            color: white;
         }
 
         #reset-button:hover {
             background: #a01818;
+        }
+
+        #reset-financials-button {
+            background: #0d6efd;
+            color: white;
+        }
+
+        #reset-financials-button:hover {
+            background: #0b5ed7;
+        }
+
+        .bonus-info {
+            font-size: 0.9em;
+            color: #15620e;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -176,16 +164,22 @@
         <h1 id="page-title">🌟 Sistema de Pontos Semanal</h1>
 
         <div id="pontos-form">
-            <!-- ... (todo o HTML do formulário permanece o mesmo, omitido para brevidade) ... -->
-            <p><strong>Para: Gabriel</strong>
-                <strong>Semana começando em:</strong><input type="text" name="semana" placeholder="Data inicial" />
+            <p>
+                <strong>Para: Gabriel</strong>
+
+                <strong>Semana começando em:</strong>
+                <input type="text" name="semana" placeholder="Data inicial" />
             </p>
-            <h2>💰 Como Funciona</h2>
+
+            <h2>💰 Como Funciona (Novas Regras)</h2>
             <ul>
-                <li><strong>Meta Semanal:</strong> 50 pontos = 10,00 € de mesada</li>
-                <li><strong>Pontos extras:</strong> A cada 10 pontos acima de 50 = 2,00 € adicionais</li>
-                <li><strong>Mínimo:</strong> Menos de 30 pontos = Sem mesada</li>
+                <li><strong>Nível Bronze 🥉 (50+ pontos):</strong> 8,00 € de mesada</li>
+                <li><strong>Nível Prata 🥈 (80+ pontos):</strong> 10,00 € de mesada</li>
+                <li><strong>Nível Ouro 🥇 (110+ pontos):</strong> 12,00 € de mesada</li>
+                <li><strong>⭐ Bônus de Consistência:</strong> +3,00 € se fizer ao menos uma tarefa todos os dias!</li>
+                <li><strong>Abaixo de 50 pontos:</strong> Sem mesada na semana.</li>
             </ul>
+
             <h2>⭐ Recompensas (Ganhar Pontos)</h2>
             <h3>🏠 Tarefas Domésticas</h3>
             <table>
@@ -223,7 +217,7 @@
                     <td><input type="checkbox" name="quart_dom" /></td>
                 </tr>
                 <tr>
-                    <td>Guardar a louça (se houver louça lavada na máquina)</td>
+                    <td>Guardar a louça</td>
                     <td class="reward">+5</td>
                     <td><input type="checkbox" name="louca_seg" /></td>
                     <td><input type="checkbox" name="louca_ter" /></td>
@@ -267,7 +261,7 @@
                     <td><input type="checkbox" name="dobrar_dom" /></td>
                 </tr>
                 <tr>
-                    <td>Dar comida e água para as cachorras</td>
+                    <td>Dar comida/água às cachorras</td>
                     <td class="reward">+3</td>
                     <td><input type="checkbox" name="cachorras_seg" /></td>
                     <td><input type="checkbox" name="cachorras_ter" /></td>
@@ -278,6 +272,7 @@
                     <td><input type="checkbox" name="cachorras_dom" /></td>
                 </tr>
             </table>
+
             <h3>🎯 Responsabilidades Pessoais</h3>
             <table>
                 <tr>
@@ -325,7 +320,7 @@
                     <td><input type="checkbox" name="licao_dom" /></td>
                 </tr>
                 <tr>
-                    <td>Preparar mochila para o dia seguinte</td>
+                    <td>Preparar mochila p/ dia seguinte</td>
                     <td class="reward">+2</td>
                     <td><input type="checkbox" name="mochila_seg" /></td>
                     <td><input type="checkbox" name="mochila_ter" /></td>
@@ -336,128 +331,107 @@
                     <td><input type="checkbox" name="mochila_dom" /></td>
                 </tr>
             </table>
+
             <h3>🌟 Atitudes Positivas</h3>
             <table>
                 <tr>
                     <th>Comportamento</th>
                     <th>Pontos</th>
-                    <th>Quando acontecer</th>
+                    <th>Quando acontecer (máx. 3x)</th>
                 </tr>
                 <tr>
                     <td>Ajudar sem ser pedido</td>
                     <td class="reward">+5</td>
                     <td><input type="checkbox" name="ajudar1" /><input type="checkbox" name="ajudar2" /><input
-                            type="checkbox" name="ajudar3" /><input type="checkbox" name="ajudar4" /><input
-                            type="checkbox" name="ajudar5" /><input type="checkbox" name="ajudar6" /><input
-                            type="checkbox" name="ajudar7" /></td>
+                            type="checkbox" name="ajudar3" /></td>
                 </tr>
                 <tr>
                     <td>Ser gentil com sua irmã</td>
                     <td class="reward">+3</td>
                     <td><input type="checkbox" name="gentil1" /><input type="checkbox" name="gentil2" /><input
-                            type="checkbox" name="gentil3" /><input type="checkbox" name="gentil4" /><input
-                            type="checkbox" name="gentil5" /><input type="checkbox" name="gentil6" /><input
-                            type="checkbox" name="gentil7" /></td>
+                            type="checkbox" name="gentil3" /></td>
                 </tr>
                 <tr>
                     <td>Obedecer na primeira</td>
                     <td class="reward">+3</td>
                     <td><input type="checkbox" name="obedecer1" /><input type="checkbox" name="obedecer2" /><input
-                            type="checkbox" name="obedecer3" /><input type="checkbox" name="obedecer4" /><input
-                            type="checkbox" name="obedecer5" /><input type="checkbox" name="obedecer6" /><input
-                            type="checkbox" name="obedecer7" /></td>
+                            type="checkbox" name="obedecer3" /></td>
                 </tr>
                 <tr>
                     <td>Falar a verdade quando errou</td>
                     <td class="reward">+5</td>
                     <td><input type="checkbox" name="verdade1" /><input type="checkbox" name="verdade2" /><input
-                            type="checkbox" name="verdade3" /><input type="checkbox" name="verdade4" /><input
-                            type="checkbox" name="verdade5" /><input type="checkbox" name="verdade6" /><input
-                            type="checkbox" name="verdade7" /></td>
+                            type="checkbox" name="verdade3" /></td>
                 </tr>
             </table>
+
             <h2>⚠️ Penalidades (Perder Pontos)</h2>
             <h3>❌ Más Atitudes</h3>
             <table>
                 <tr>
                     <th>Comportamento</th>
                     <th>Pontos</th>
-                    <th>Quando acontecer</th>
+                    <th>Quando acontecer (máx. 3x)</th>
                 </tr>
                 <tr>
                     <td>Mentir</td>
-                    <td class="penalty">-10</td>
+                    <td class="penalty">-20</td>
                     <td><input type="checkbox" name="mentir1" /><input type="checkbox" name="mentir2" /><input
-                            type="checkbox" name="mentir3" /><input type="checkbox" name="mentir4" /><input
-                            type="checkbox" name="mentir5" /><input type="checkbox" name="mentir6" /><input
-                            type="checkbox" name="mentir7" /></td>
+                            type="checkbox" name="mentir3" /></td>
                 </tr>
                 <tr>
                     <td>Desrespeitar pais/vizinhos/amigos</td>
-                    <td class="penalty">-8</td>
+                    <td class="penalty">-15</td>
                     <td><input type="checkbox" name="desrespeitar1" /><input type="checkbox"
-                            name="desrespeitar2" /><input type="checkbox" name="desrespeitar3" /><input type="checkbox"
-                            name="desrespeitar4" /><input type="checkbox" name="desrespeitar5" /><input type="checkbox"
-                            name="desrespeitar6" /><input type="checkbox" name="desrespeitar7" /></td>
+                            name="desrespeitar2" /><input type="checkbox" name="desrespeitar3" /></td>
                 </tr>
                 <tr>
                     <td>Brigar com sua irmã</td>
-                    <td class="penalty">-10</td>
+                    <td class="penalty">-15</td>
                     <td><input type="checkbox" name="brigar1" /><input type="checkbox" name="brigar2" /><input
-                            type="checkbox" name="brigar3" /><input type="checkbox" name="brigar4" /><input
-                            type="checkbox" name="brigar5" /><input type="checkbox" name="brigar6" /><input
-                            type="checkbox" name="brigar7" /></td>
+                            type="checkbox" name="brigar3" /></td>
                 </tr>
                 <tr>
                     <td>Não fazer TPC</td>
-                    <td class="penalty">-8</td>
+                    <td class="penalty">-10</td>
                     <td><input type="checkbox" name="naolic1" /><input type="checkbox" name="naolic2" /><input
-                            type="checkbox" name="naolic3" /><input type="checkbox" name="naolic4" /><input
-                            type="checkbox" name="naolic5" /><input type="checkbox" name="naolic6" /><input
-                            type="checkbox" name="naolic7" /></td>
+                            type="checkbox" name="naolic3" /></td>
                 </tr>
                 <tr>
                     <td>Deixar quarto bagunçado</td>
-                    <td class="penalty">-5</td>
+                    <td class="penalty">-7</td>
                     <td><input type="checkbox" name="baguncado1" /><input type="checkbox" name="baguncado2" /><input
-                            type="checkbox" name="baguncado3" /><input type="checkbox" name="baguncado4" /><input
-                            type="checkbox" name="baguncado5" /><input type="checkbox" name="baguncado6" /><input
-                            type="checkbox" name="baguncado7" /></td>
+                            type="checkbox" name="baguncado3" /></td>
                 </tr>
                 <tr>
                     <td>Gritar ou fazer birra</td>
                     <td class="penalty">-5</td>
                     <td><input type="checkbox" name="birra1" /><input type="checkbox" name="birra2" /><input
-                            type="checkbox" name="birra3" /><input type="checkbox" name="birra4" /><input
-                            type="checkbox" name="birra5" /><input type="checkbox" name="birra6" /><input
-                            type="checkbox" name="birra7" /></td>
+                            type="checkbox" name="birra3" /></td>
                 </tr>
                 <tr>
                     <td>Usar eletrônicos sem permissão</td>
                     <td class="penalty">-7</td>
                     <td><input type="checkbox" name="eletronicos1" /><input type="checkbox" name="eletronicos2" /><input
-                            type="checkbox" name="eletronicos3" /><input type="checkbox" name="eletronicos4" /><input
-                            type="checkbox" name="eletronicos5" /><input type="checkbox" name="eletronicos6" /><input
-                            type="checkbox" name="eletronicos7" /></td>
+                            type="checkbox" name="eletronicos3" /></td>
                 </tr>
                 <tr>
-                    <td>Não escovar os dentes 2 vezes ao dia</td>
+                    <td>Não escovar os dentes 2x ao dia</td>
                     <td class="penalty">-3</td>
                     <td><input type="checkbox" name="no_escova1" /><input type="checkbox" name="no_escova2" /><input
-                            type="checkbox" name="no_escova3" /><input type="checkbox" name="no_escova4" /><input
-                            type="checkbox" name="no_escova5" /><input type="checkbox" name="no_escova6" /><input
-                            type="checkbox" name="no_escova7" /></td>
+                            type="checkbox" name="no_escova3" /></td>
                 </tr>
             </table>
+
             <h2>📊 Contador Semanal</h2>
             <div class="flex">
                 <div>
                     <h3>📈 Pontos Ganhos</h3>
-                    <table class="contador-mesada-table" role="presentation" aria-label="Pontos Ganhos">
+                    <table class="contador-mesada-table">
                         <tbody>
                             <tr>
                                 <td>Segunda:</td>
-                                <td><input type="number" name="seg_pontos" min="0" max="200" readonly></td>
+                                <td><input type="number" name="seg_pontos" readonly></td>
                             </tr>
                             <tr>
                                 <td>Terça:</td>
@@ -492,7 +466,7 @@
                 </div>
                 <div>
                     <h3>💵 Cálculo da Mesada</h3>
-                    <table class="contador-mesada-table" role="presentation" aria-label="Cálculo da Mesada">
+                    <table class="contador-mesada-table">
                         <tbody>
                             <tr>
                                 <td>Pontos desta semana:</td>
@@ -503,24 +477,29 @@
                                 <td><input type="text4" name="valor_conquistado" readonly></td>
                             </tr>
                             <tr>
-                                <td>Dinheiro acumulado:</td>
-                                <td><input type="text4" name="dinheiro_acumulado"></td>
+                                <td>Prêmios acumulados:</td>
+                                <td><input type="text4" name="premios_acumulados" value="0.00"></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+
             <h2>🎯 Meu Objetivo de Compra</h2>
             <p>O que quero comprar: <input type="text2" name="objetivo" /></p>
-            <table class="contador-mesada-table" role="presentation" aria-label="Meu Objetivo de Compra">
+            <table class="contador-mesada-table">
                 <tbody>
                     <tr>
                         <td>Preço: €</td>
                         <td><input type="number" name="preco" step="0.01" /></td>
                     </tr>
                     <tr>
+                        <td>Dinheiro extra: €</td>
+                        <td><input type="number" name="dinheiro_extra" step="0.01" value="0.00" /></td>
+                    </tr>
+                    <tr>
                         <td>Já tenho: €</td>
-                        <td><input type="number" name="ja_tenho" step="0.01" /></td>
+                        <td><input type="number" name="ja_tenho" step="0.01" readonly /></td>
                     </tr>
                     <tr>
                         <td>Ainda preciso: €</td>
@@ -528,18 +507,12 @@
                     </tr>
                 </tbody>
             </table>
-            <h2>📋 Regras Importantes</h2>
-            <ol class="help">
-                <li>Pontos são calculados todo domingo à noite</li>
-                <li>Mesada é paga na segunda-feira</li>
-                <li>Economize para realizar seus sonhos!</li>
-            </ol>
 
-            <!-- Botão de Reset -->
             <div id="admin-controls"
                 style="display: none; margin-top: 30px; border-top: 2px solid #ccc; padding-top: 20px;">
                 <h2>Controles Administrativos</h2>
-                <button id="reset-button">🧹 Limpar para Nova Semana</button>
+                <button id="reset-button" class="admin-button">🧹 Limpar para Nova Semana</button>
+                <button id="reset-financials-button" class="admin-button">💰 Zerar Contadores Financeiros</button>
             </div>
         </div>
     </div>
@@ -566,64 +539,174 @@
         let isUpdatingFromFirebase = false;
         let isReadOnly = false;
 
+        const DIAS_SEMANA = ["seg", "ter", "qua", "qui", "sex", "sab", "dom"];
+        const TAREFAS_DIARIAS = [
+            { name: "cama_", value: 3 }, { name: "quart_", value: 5 }, { name: "louca_", value: 5 },
+            { name: "lixo_", value: 3 }, { name: "sapatos_", value: 3 }, { name: "dobrar_", value: 4 },
+            { name: "cachorras_", value: 3 }, { name: "banho_", value: 2 }, { name: "escova_", value: 2 },
+            { name: "licao_", value: 5 }, { name: "mochila_", value: 2 }
+        ];
+        const ATITUDES_POSITIVAS = [
+            { name: "ajudar", value: 5 }, { name: "gentil", value: 3 },
+            { name: "obedecer", value: 3 }, { name: "verdade", value: 5 }
+        ];
+        const PENALIDADES = [
+            { name: "mentir", value: -20 }, { name: "desrespeitar", value: -15 }, { name: "brigar", value: -15 },
+            { name: "naolic", value: -10 }, { name: "baguncado", value: -7 }, { name: "birra", value: -5 },
+            { name: "eletronicos", value: -7 }, { name: "no_escova", value: -3 }
+        ];
+
         // --- LÓGICA DE PERMISSÃO E CONTROLES ---
         function applyPermissions() {
             const urlParams = new URLSearchParams(window.location.search);
             const user = urlParams.get('user');
-
             if (user && user.toLowerCase() === 'gabriel') {
                 isReadOnly = true;
                 document.getElementById('page-title').textContent = '🌟 Sistema de Pontos (Modo Leitura)';
                 document.querySelectorAll('#pontos-form input').forEach(input => {
-                    if (!input.readOnly) {
-                        input.disabled = true;
-                    }
+                    if (!input.readOnly) input.disabled = true;
                 });
             } else {
-                // Mostra os controles de admin se não for modo leitura
                 document.getElementById('admin-controls').style.display = 'block';
             }
         }
 
-        // --- LÓGICA DE LIMPEZA DE SEMANA ---
+        // --- LÓGICA DE LIMPEZA ---
         function resetWeek() {
-            const confirmation = confirm("Tem certeza que deseja limpar os dados da semana? Esta ação não pode ser desfeita.");
-            if (!confirmation) {
-                return;
-            }
+            if (!confirm("Tem certeza que deseja limpar os dados da semana? O valor conquistado será somado aos prêmios acumulados.")) return;
 
-            const fieldsToKeep = ['dinheiro_acumulado', 'objetivo', 'preco', 'ja_tenho'];
-            const currentData = {};
-            fieldsToKeep.forEach(fieldName => {
-                const input = document.querySelector(`input[name="${fieldName}"]`);
-                if (input) {
-                    currentData[fieldName] = input.value;
+            const valorConquistado = parseFloat(document.querySelector('input[name="valor_conquistado"]').value.replace(/€/g, '').replace(/\(Bônus! ⭐\)/g, '').trim()) || 0;
+            const premiosAcumuladosAtual = parseFloat(document.querySelector('input[name="premios_acumulados"]').value) || 0;
+
+            const novosPremiosAcumulados = premiosAcumuladosAtual + valorConquistado;
+
+            const fieldsToKeep = {
+                premios_acumulados: novosPremiosAcumulados.toFixed(2),
+                dinheiro_extra: document.querySelector('input[name="dinheiro_extra"]').value,
+                objetivo: document.querySelector('input[name="objetivo"]').value,
+                preco: document.querySelector('input[name="preco"]').value
+            };
+
+            const today = new Date();
+            fieldsToKeep.semana = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
+
+            dataRef.set(fieldsToKeep);
+        }
+
+        function resetFinancials() {
+            if (!confirm("ATENÇÃO: Tem certeza que deseja ZERAR os 'Prêmios acumulados' e o 'Dinheiro extra'? Esta ação é recomendada apenas ao comprar um objetivo.")) return;
+
+            // Atualiza os campos no Firebase
+            dataRef.update({
+                premios_acumulados: "0.00",
+                dinheiro_extra: "0.00"
+            });
+        }
+
+        // --- LÓGICA DE CÁLCULO ---
+        function calcularFinancas() {
+            const premiosAcumulados = parseFloat(document.querySelector('input[name="premios_acumulados"]').value) || 0;
+            const dinheiroExtra = parseFloat(document.querySelector('input[name="dinheiro_extra"]').value) || 0;
+            const preco = parseFloat(document.querySelector('input[name="preco"]').value) || 0;
+
+            const jaTenho = premiosAcumulados + dinheiroExtra;
+            const aindaPreciso = preco - jaTenho;
+
+            document.querySelector('input[name="ja_tenho"]').value = jaTenho.toFixed(2);
+            document.querySelector('input[name="ainda_preciso"]').value = aindaPreciso > 0 ? aindaPreciso.toFixed(2) : "0.00";
+        }
+
+        function calcularPontos() {
+            let totalPontos = 0;
+            const pontosDiarios = { seg: 0, ter: 0, qua: 0, qui: 0, sex: 0, sab: 0, dom: 0 };
+            const diasComTarefas = new Set();
+
+            TAREFAS_DIARIAS.forEach(item => {
+                DIAS_SEMANA.forEach(dia => {
+                    const el = document.querySelector(`input[name="${item.name}${dia}"]`);
+                    if (el && el.checked) {
+                        totalPontos += item.value;
+                        pontosDiarios[dia] += item.value;
+                        diasComTarefas.add(dia);
+                    }
+                });
+            });
+
+            ATITUDES_POSITIVAS.forEach(item => {
+                for (let i = 1; i <= 3; i++) {
+                    const el = document.querySelector(`input[name="${item.name}${i}"]`);
+                    if (el && el.checked) totalPontos += item.value;
                 }
             });
 
-            // Pega a data de hoje e formata como DD/MM/YYYY
-            const today = new Date();
-            const nextDate = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
+            PENALIDADES.forEach(item => {
+                for (let i = 1; i <= 3; i++) {
+                    const el = document.querySelector(`input[name="${item.name}${i}"]`);
+                    if (el && el.checked) totalPontos += item.value;
+                }
+            });
 
-            const newData = { ...currentData, semana: nextDate };
+            document.querySelector('input[name="total_pontos"]').value = totalPontos;
+            document.querySelector('input[name="pontos_semana"]').value = totalPontos;
+            DIAS_SEMANA.forEach(dia => {
+                const campoDia = document.querySelector(`input[name="${dia}_pontos"]`);
+                if (campoDia) campoDia.value = pontosDiarios[dia];
+            });
 
-            // Define os novos dados no Firebase, efetivamente limpando o resto
-            dataRef.set(newData);
+            let valorBase = 0;
+            if (totalPontos >= 110) valorBase = 12;
+            else if (totalPontos >= 80) valorBase = 10;
+            else if (totalPontos >= 50) valorBase = 8;
+
+            let bonusConsistencia = 0;
+            if (diasComTarefas.size === 7) {
+                bonusConsistencia = 3;
+            }
+
+            const valorFinal = valorBase + bonusConsistencia;
+            let textoValor = `€ ${valorFinal.toFixed(2)}`;
+            if (bonusConsistencia > 0) {
+                textoValor += ` (Bônus! ⭐)`;
+            }
+            document.querySelector('input[name="valor_conquistado"]').value = textoValor;
+
+            calcularFinancas();
         }
 
-
-        // --- LÓGICA DE CÁLCULO (sem alterações) ---
-        function calcularPontos() {
-            const tarefas = [{ name: "cama_", value: 3 }, { name: "quart_", value: 5 }, { name: "louca_", value: 5 }, { name: "lixo_", value: 3 }, { name: "varrer_", value: 4 }, { name: "sapatos_", value: 3 }, { name: "dobrar_", value: 4 }, { name: "banho_", value: 2 }, { name: "escova_", value: 2 }, { name: "licao_", value: 5 }, { name: "mochila_", value: 2 }, { name: "cachorras_", value: 3 },]; const positivas = [{ name: "ajudar", value: 5 }, { name: "gentil", value: 3 }, { name: "obedecer", value: 3 }, { name: "verdade", value: 5 },]; const penalidades = [{ name: "mentir", value: -10 }, { name: "desrespeitar", value: -8 }, { name: "brigar", value: -10 }, { name: "naolic", value: -8 }, { name: "baguncado", value: -5 }, { name: "birra", value: -5 }, { name: "eletronicos", value: -7 }, { name: "no_escova", value: -3 },]; let totalPontos = 0; const pontosDiarios = { seg: 0, ter: 0, qua: 0, qui: 0, sex: 0, sab: 0, dom: 0 }; tarefas.forEach((item) => { ["seg", "ter", "qua", "qui", "sex", "sab", "dom"].forEach((dia) => { const el = document.querySelector(`input[name="${item.name}${dia}"]`); if (el && el.checked) { totalPontos += item.value; pontosDiarios[dia] += item.value; } }); }); positivas.forEach((item) => { for (let i = 1; i <= 7; i++) { const el = document.querySelector(`input[name="${item.name}${i}"]`); if (el && el.checked) totalPontos += item.value; } }); penalidades.forEach((item) => { for (let i = 1; i <= 7; i++) { const el = document.querySelector(`input[name="${item.name}${i}"]`); if (el && el.checked) totalPontos += item.value; } }); document.querySelector('input[name="total_pontos"]').value = totalPontos; document.querySelector('input[name="pontos_semana"]').value = totalPontos; for (const dia in pontosDiarios) { const campoDia = document.querySelector(`input[name="${dia}_pontos"]`); if (campoDia) campoDia.value = pontosDiarios[dia]; }
-            let valor = 0; if (totalPontos >= 50) { valor = 10 + Math.floor((totalPontos - 50) / 10) * 2; } else if (totalPontos < 30) { valor = 0; }
-            document.querySelector('input[name="valor_conquistado"]').value = "€ " + valor.toFixed(2); const preco = Number(document.querySelector('input[name="preco"]').value) || 0; const ja_tenho = Number(document.querySelector('input[name="ja_tenho"]').value) || 0; const ainda_preciso = preco - ja_tenho; document.querySelector('input[name="ainda_preciso"]').value = ainda_preciso > 0 ? ainda_preciso.toFixed(2) : "0.00";
+        // --- LÓGICA DO FIREBASE ---
+        function saveDataToFirebase() {
+            if (isUpdatingFromFirebase) return;
+            const formData = {};
+            document.querySelectorAll('#pontos-form input').forEach(input => {
+                if (input.readOnly) return;
+                const name = input.name;
+                if (input.type === 'checkbox') {
+                    formData[name] = input.checked;
+                } else {
+                    formData[name] = input.value;
+                }
+            });
+            dataRef.set(formData);
         }
 
-        // --- LÓGICA DO FIREBASE (sem alterações) ---
-        function saveDataToFirebase() { if (isUpdatingFromFirebase) return; const formData = {}; document.querySelectorAll('#pontos-form input').forEach(input => { if (input.readOnly) return; const name = input.name; if (input.type === 'checkbox') { formData[name] = input.checked; } else { formData[name] = input.value; } }); dataRef.set(formData); }
         function loadDataFromFirebase(data) {
-            isUpdatingFromFirebase = true; document.querySelectorAll('#pontos-form input[type="checkbox"]').forEach(cb => cb.checked = false); for (const name in data) { const input = document.querySelector(`#pontos-form input[name="${name}"]`); if (input) { if (input.type === 'checkbox') { input.checked = data[name]; } else { input.value = data[name]; } } }
-            isUpdatingFromFirebase = false; calcularPontos();
+            isUpdatingFromFirebase = true;
+            document.querySelectorAll('#pontos-form input').forEach(input => {
+                const name = input.name;
+                if (data.hasOwnProperty(name)) {
+                    if (input.type === 'checkbox') {
+                        input.checked = data[name];
+                    } else {
+                        input.value = data[name];
+                    }
+                } else {
+                    if (input.type === 'checkbox') {
+                        input.checked = false;
+                    }
+                }
+            });
+            isUpdatingFromFirebase = false;
+            calcularPontos();
         }
 
         // --- INICIALIZAÇÃO ---
@@ -631,13 +714,24 @@
 
         if (!isReadOnly) {
             document.getElementById('reset-button').addEventListener('click', resetWeek);
+            document.getElementById('reset-financials-button').addEventListener('click', resetFinancials);
         }
 
         document.querySelectorAll('#pontos-form input').forEach(input => {
             if (!input.disabled && !input.readOnly) {
-                input.addEventListener('change', saveDataToFirebase);
+                const eventType = (input.type === 'checkbox' || input.type === 'number') ? 'change' : 'keyup';
+                input.addEventListener(eventType, () => {
+                    // Não salva imediatamente no keyup para evitar sobrecarga, mas calcula para feedback
+                    if (eventType === 'keyup') {
+                        calcularPontos();
+                    } else {
+                        saveDataToFirebase();
+                        calcularPontos();
+                    }
+                });
+                // Adiciona um listener 'blur' para salvar campos de texto quando o usuário sai deles
                 if (input.type !== 'checkbox') {
-                    input.addEventListener('keyup', saveDataToFirebase);
+                    input.addEventListener('blur', saveDataToFirebase);
                 }
             }
         });
