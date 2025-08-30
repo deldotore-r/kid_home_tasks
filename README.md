@@ -90,11 +90,38 @@ Ela é chamada sempre que os dados são carregados do Firebase ou após uma alte
 A função `resetWeek()` executa três ações principais:
 1.  **Confirmação:** Exibe um `confirm()` para prevenir resets acidentais.
 2.  **Preservação de Dados:** Lê e armazena temporariamente os valores dos campos que não devem ser apagados (como "Dinheiro acumulado" e "Meu Objetivo de Compra").
-3.  **Atualização Atômica:** Cria um novo objeto JavaScript contendo apenas os dados a serem preservados e a data da nova semana. Em seguida, usa `dataRef.set()` para substituir os dados antigos no Firebase por este novo objeto, efetivamente limpando todos os outros campos (checkboxes, etc.) de uma só vez.
-
-4.  ---
+3.  **Atualização Atômica:** Cria um novo objeto JavaScript contendo apenas os dados a serem preservados e a data da nova semana. Em seguida, usa `dataRef.set()` para substituir os dados antigos no Firebase por este novo objeto, efetivamente limpando todos os outros campos (checkboxes, etc.) de uma só vez. ---
   
+---
+
 <br>
+  
+## 🔐 Segurança: Protegendo as Credenciais
+
+Uma questão fundamental em projetos que se conectam a serviços em nuvem é a segurança das credenciais. Neste projeto, o objeto `firebaseConfig` no `index.html` contém a `apiKey`, que identifica a aplicação para os servidores do Google.
+
+### O `firebaseConfig` é Público por Design
+
+Pode parecer contraintuitivo, mas para aplicações web (front-end), o Google projetou o Firebase de forma que **é seguro e esperado que o objeto `firebaseConfig` seja público**. Ele funciona como um identificador do projeto, não como uma senha secreta.
+
+A verdadeira segurança da aplicação é garantida por duas camadas:
+
+1.  **Firebase Rules (O Quê e Quem):** As regras definidas no painel do Realtime Database controlam *quais dados* podem ser lidos ou escritos e *por quem*. No nosso caso, as regras são públicas (`".read": "true", ".write": "true"`), o que é apropriado para a natureza da aplicação.
+
+2.  **Restrições da API Key (De Onde):** Esta é a camada de segurança que foi implementada para proteger o projeto contra o uso indevido da `apiKey`.
+
+### Implementando a Restrição da Chave de API
+
+Para garantir que a `apiKey` só possa ser usada a partir do nosso site, foi configurada uma **restrição de referenciador HTTP** no Google Cloud Console.
+
+**O que isso significa?**
+A chave de API foi "trancada" para aceitar requisições vindas exclusivamente do domínio onde a aplicação está hospedada:
+*   `dominio.netlify.app`
+
+Qualquer tentativa de usar esta `apiKey` a partir de outro domínio ou de um ambiente local será **bloqueada** pelo Google. Esta medida impede efetivamente o abuso da chave, protegendo a cota do plano gratuito e garantindo que apenas a nossa aplicação legítima possa se comunicar com o projeto Firebase.
+
+Esta prática é um passo crucial para mover um projeto de um protótipo para uma aplicação segura e pronta para produção.
+
 
 ## 🏁 Conclusão
 
