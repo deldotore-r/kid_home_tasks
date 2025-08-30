@@ -6,6 +6,7 @@
     <title>Sistema de Pontos Semanal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
+        /* ... (todo o CSS permanece o mesmo, omitido para brevidade) ... */
         body {
             font-family: Arial, sans-serif;
             margin: 16px;
@@ -39,7 +40,6 @@
             background: #f0f0f0;
         }
 
-        /* Colunas alinhamentos */
         table tr>th:nth-child(1),
         table tr>td:nth-child(1) {
             text-align: left;
@@ -91,12 +91,10 @@
             box-sizing: border-box;
         }
 
-        /* Estilo para campos desabilitados */
         input:disabled {
             background-color: #eeeeee;
             cursor: not-allowed;
         }
-
 
         .flex {
             display: flex;
@@ -155,6 +153,21 @@
             width: 60px;
             box-sizing: border-box;
         }
+
+        #reset-button {
+            background: #c21e1e;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        #reset-button:hover {
+            background: #a01818;
+        }
     </style>
 </head>
 
@@ -163,22 +176,17 @@
         <h1 id="page-title">🌟 Sistema de Pontos Semanal</h1>
 
         <div id="pontos-form">
-            <p>
-                <strong>Para: Gabriel</strong>
-
-                <strong>Semana começando em:</strong>
-                <input type="text" name="semana" placeholder="Data inicial" />
+            <!-- ... (todo o HTML do formulário permanece o mesmo, omitido para brevidade) ... -->
+            <p><strong>Para: Gabriel</strong>
+                <strong>Semana começando em:</strong><input type="text" name="semana" placeholder="Data inicial" />
             </p>
-
             <h2>💰 Como Funciona</h2>
             <ul>
                 <li><strong>Meta Semanal:</strong> 50 pontos = 10,00 € de mesada</li>
                 <li><strong>Pontos extras:</strong> A cada 10 pontos acima de 50 = 2,00 € adicionais</li>
                 <li><strong>Mínimo:</strong> Menos de 30 pontos = Sem mesada</li>
             </ul>
-
             <h2>⭐ Recompensas (Ganhar Pontos)</h2>
-
             <h3>🏠 Tarefas Domésticas</h3>
             <table>
                 <tr>
@@ -270,7 +278,6 @@
                     <td><input type="checkbox" name="cachorras_dom" /></td>
                 </tr>
             </table>
-
             <h3>🎯 Responsabilidades Pessoais</h3>
             <table>
                 <tr>
@@ -329,7 +336,6 @@
                     <td><input type="checkbox" name="mochila_dom" /></td>
                 </tr>
             </table>
-
             <h3>🌟 Atitudes Positivas</h3>
             <table>
                 <tr>
@@ -340,57 +346,36 @@
                 <tr>
                     <td>Ajudar sem ser pedido</td>
                     <td class="reward">+5</td>
-                    <td>
-                        <input type="checkbox" name="ajudar1" />
-                        <input type="checkbox" name="ajudar2" />
-                        <input type="checkbox" name="ajudar3" />
-                        <input type="checkbox" name="ajudar4" />
-                        <input type="checkbox" name="ajudar5" />
-                        <input type="checkbox" name="ajudar6" />
-                        <input type="checkbox" name="ajudar7" />
-                    </td>
+                    <td><input type="checkbox" name="ajudar1" /><input type="checkbox" name="ajudar2" /><input
+                            type="checkbox" name="ajudar3" /><input type="checkbox" name="ajudar4" /><input
+                            type="checkbox" name="ajudar5" /><input type="checkbox" name="ajudar6" /><input
+                            type="checkbox" name="ajudar7" /></td>
                 </tr>
                 <tr>
                     <td>Ser gentil com sua irmã</td>
                     <td class="reward">+3</td>
-                    <td>
-                        <input type="checkbox" name="gentil1" />
-                        <input type="checkbox" name="gentil2" />
-                        <input type="checkbox" name="gentil3" />
-                        <input type="checkbox" name="gentil4" />
-                        <input type="checkbox" name="gentil5" />
-                        <input type="checkbox" name="gentil6" />
-                        <input type="checkbox" name="gentil7" />
-                    </td>
+                    <td><input type="checkbox" name="gentil1" /><input type="checkbox" name="gentil2" /><input
+                            type="checkbox" name="gentil3" /><input type="checkbox" name="gentil4" /><input
+                            type="checkbox" name="gentil5" /><input type="checkbox" name="gentil6" /><input
+                            type="checkbox" name="gentil7" /></td>
                 </tr>
                 <tr>
                     <td>Obedecer na primeira</td>
                     <td class="reward">+3</td>
-                    <td>
-                        <input type="checkbox" name="obedecer1" />
-                        <input type="checkbox" name="obedecer2" />
-                        <input type="checkbox" name="obedecer3" />
-                        <input type="checkbox" name="obedecer4" />
-                        <input type="checkbox" name="obedecer5" />
-                        <input type="checkbox" name="obedecer6" />
-                        <input type="checkbox" name="obedecer7" />
-                    </td>
+                    <td><input type="checkbox" name="obedecer1" /><input type="checkbox" name="obedecer2" /><input
+                            type="checkbox" name="obedecer3" /><input type="checkbox" name="obedecer4" /><input
+                            type="checkbox" name="obedecer5" /><input type="checkbox" name="obedecer6" /><input
+                            type="checkbox" name="obedecer7" /></td>
                 </tr>
                 <tr>
                     <td>Falar a verdade quando errou</td>
                     <td class="reward">+5</td>
-                    <td>
-                        <input type="checkbox" name="verdade1" />
-                        <input type="checkbox" name="verdade2" />
-                        <input type="checkbox" name="verdade3" />
-                        <input type="checkbox" name="verdade4" />
-                        <input type="checkbox" name="verdade5" />
-                        <input type="checkbox" name="verdade6" />
-                        <input type="checkbox" name="verdade7" />
-                    </td>
+                    <td><input type="checkbox" name="verdade1" /><input type="checkbox" name="verdade2" /><input
+                            type="checkbox" name="verdade3" /><input type="checkbox" name="verdade4" /><input
+                            type="checkbox" name="verdade5" /><input type="checkbox" name="verdade6" /><input
+                            type="checkbox" name="verdade7" /></td>
                 </tr>
             </table>
-
             <h2>⚠️ Penalidades (Perder Pontos)</h2>
             <h3>❌ Más Atitudes</h3>
             <table>
@@ -402,109 +387,68 @@
                 <tr>
                     <td>Mentir</td>
                     <td class="penalty">-10</td>
-                    <td>
-                        <input type="checkbox" name="mentir1" />
-                        <input type="checkbox" name="mentir2" />
-                        <input type="checkbox" name="mentir3" />
-                        <input type="checkbox" name="mentir4" />
-                        <input type="checkbox" name="mentir5" />
-                        <input type="checkbox" name="mentir6" />
-                        <input type="checkbox" name="mentir7" />
-                    </td>
+                    <td><input type="checkbox" name="mentir1" /><input type="checkbox" name="mentir2" /><input
+                            type="checkbox" name="mentir3" /><input type="checkbox" name="mentir4" /><input
+                            type="checkbox" name="mentir5" /><input type="checkbox" name="mentir6" /><input
+                            type="checkbox" name="mentir7" /></td>
                 </tr>
                 <tr>
                     <td>Desrespeitar pais/vizinhos/amigos</td>
                     <td class="penalty">-8</td>
-                    <td>
-                        <input type="checkbox" name="desrespeitar1" />
-                        <input type="checkbox" name="desrespeitar2" />
-                        <input type="checkbox" name="desrespeitar3" />
-                        <input type="checkbox" name="desrespeitar4" />
-                        <input type="checkbox" name="desrespeitar5" />
-                        <input type="checkbox" name="desrespeitar6" />
-                        <input type="checkbox" name="desrespeitar7" />
-                    </td>
+                    <td><input type="checkbox" name="desrespeitar1" /><input type="checkbox"
+                            name="desrespeitar2" /><input type="checkbox" name="desrespeitar3" /><input type="checkbox"
+                            name="desrespeitar4" /><input type="checkbox" name="desrespeitar5" /><input type="checkbox"
+                            name="desrespeitar6" /><input type="checkbox" name="desrespeitar7" /></td>
                 </tr>
                 <tr>
                     <td>Brigar com sua irmã</td>
                     <td class="penalty">-10</td>
-                    <td>
-                        <input type="checkbox" name="brigar1" />
-                        <input type="checkbox" name="brigar2" />
-                        <input type="checkbox" name="brigar3" />
-                        <input type="checkbox" name="brigar4" />
-                        <input type="checkbox" name="brigar5" />
-                        <input type="checkbox" name="brigar6" />
-                        <input type="checkbox" name="brigar7" />
-                    </td>
+                    <td><input type="checkbox" name="brigar1" /><input type="checkbox" name="brigar2" /><input
+                            type="checkbox" name="brigar3" /><input type="checkbox" name="brigar4" /><input
+                            type="checkbox" name="brigar5" /><input type="checkbox" name="brigar6" /><input
+                            type="checkbox" name="brigar7" /></td>
                 </tr>
                 <tr>
                     <td>Não fazer TPC</td>
                     <td class="penalty">-8</td>
-                    <td>
-                        <input type="checkbox" name="naolic1" />
-                        <input type="checkbox" name="naolic2" />
-                        <input type="checkbox" name="naolic3" />
-                        <input type="checkbox" name="naolic4" />
-                        <input type="checkbox" name="naolic5" />
-                        <input type="checkbox" name="naolic6" />
-                        <input type="checkbox" name="naolic7" />
-                    </td>
+                    <td><input type="checkbox" name="naolic1" /><input type="checkbox" name="naolic2" /><input
+                            type="checkbox" name="naolic3" /><input type="checkbox" name="naolic4" /><input
+                            type="checkbox" name="naolic5" /><input type="checkbox" name="naolic6" /><input
+                            type="checkbox" name="naolic7" /></td>
                 </tr>
                 <tr>
                     <td>Deixar quarto bagunçado</td>
                     <td class="penalty">-5</td>
-                    <td>
-                        <input type="checkbox" name="baguncado1" />
-                        <input type="checkbox" name="baguncado2" />
-                        <input type="checkbox" name="baguncado3" />
-                        <input type="checkbox" name="baguncado4" />
-                        <input type="checkbox" name="baguncado5" />
-                        <input type="checkbox" name="baguncado6" />
-                        <input type="checkbox" name="baguncado7" />
-                    </td>
+                    <td><input type="checkbox" name="baguncado1" /><input type="checkbox" name="baguncado2" /><input
+                            type="checkbox" name="baguncado3" /><input type="checkbox" name="baguncado4" /><input
+                            type="checkbox" name="baguncado5" /><input type="checkbox" name="baguncado6" /><input
+                            type="checkbox" name="baguncado7" /></td>
                 </tr>
                 <tr>
                     <td>Gritar ou fazer birra</td>
                     <td class="penalty">-5</td>
-                    <td>
-                        <input type="checkbox" name="birra1" />
-                        <input type="checkbox" name="birra2" />
-                        <input type="checkbox" name="birra3" />
-                        <input type="checkbox" name="birra4" />
-                        <input type="checkbox" name="birra5" />
-                        <input type="checkbox" name="birra6" />
-                        <input type="checkbox" name="birra7" />
-                    </td>
+                    <td><input type="checkbox" name="birra1" /><input type="checkbox" name="birra2" /><input
+                            type="checkbox" name="birra3" /><input type="checkbox" name="birra4" /><input
+                            type="checkbox" name="birra5" /><input type="checkbox" name="birra6" /><input
+                            type="checkbox" name="birra7" /></td>
                 </tr>
                 <tr>
                     <td>Usar eletrônicos sem permissão</td>
                     <td class="penalty">-7</td>
-                    <td>
-                        <input type="checkbox" name="eletronicos1" />
-                        <input type="checkbox" name="eletronicos2" />
-                        <input type="checkbox" name="eletronicos3" />
-                        <input type="checkbox" name="eletronicos4" />
-                        <input type="checkbox" name="eletronicos5" />
-                        <input type="checkbox" name="eletronicos6" />
-                        <input type="checkbox" name="eletronicos7" />
-                    </td>
+                    <td><input type="checkbox" name="eletronicos1" /><input type="checkbox" name="eletronicos2" /><input
+                            type="checkbox" name="eletronicos3" /><input type="checkbox" name="eletronicos4" /><input
+                            type="checkbox" name="eletronicos5" /><input type="checkbox" name="eletronicos6" /><input
+                            type="checkbox" name="eletronicos7" /></td>
                 </tr>
                 <tr>
                     <td>Não escovar os dentes 2 vezes ao dia</td>
                     <td class="penalty">-3</td>
-                    <td>
-                        <input type="checkbox" name="no_escova1" />
-                        <input type="checkbox" name="no_escova2" />
-                        <input type="checkbox" name="no_escova3" />
-                        <input type="checkbox" name="no_escova4" />
-                        <input type="checkbox" name="no_escova5" />
-                        <input type="checkbox" name="no_escova6" />
-                        <input type="checkbox" name="no_escova7" />
-                    </td>
+                    <td><input type="checkbox" name="no_escova1" /><input type="checkbox" name="no_escova2" /><input
+                            type="checkbox" name="no_escova3" /><input type="checkbox" name="no_escova4" /><input
+                            type="checkbox" name="no_escova5" /><input type="checkbox" name="no_escova6" /><input
+                            type="checkbox" name="no_escova7" /></td>
                 </tr>
             </table>
-
             <h2>📊 Contador Semanal</h2>
             <div class="flex">
                 <div>
@@ -566,11 +510,8 @@
                     </table>
                 </div>
             </div>
-
             <h2>🎯 Meu Objetivo de Compra</h2>
-            <p>
-                O que quero comprar: <input type="text2" name="objetivo" />
-            </p>
+            <p>O que quero comprar: <input type="text2" name="objetivo" /></p>
             <table class="contador-mesada-table" role="presentation" aria-label="Meu Objetivo de Compra">
                 <tbody>
                     <tr>
@@ -587,13 +528,19 @@
                     </tr>
                 </tbody>
             </table>
-
             <h2>📋 Regras Importantes</h2>
             <ol class="help">
                 <li>Pontos são calculados todo domingo à noite</li>
                 <li>Mesada é paga na segunda-feira</li>
                 <li>Economize para realizar seus sonhos!</li>
             </ol>
+
+            <!-- Botão de Reset -->
+            <div id="admin-controls"
+                style="display: none; margin-top: 30px; border-top: 2px solid #ccc; padding-top: 20px;">
+                <h2>Controles Administrativos</h2>
+                <button id="reset-button">🧹 Limpar para Nova Semana</button>
+            </div>
         </div>
     </div>
 
@@ -602,7 +549,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 
     <script>
-        // Your web app's Firebase configuration
+        // --- CONFIGURAÇÃO E VARIÁVEIS GLOBAIS ---
         const firebaseConfig = {
             apiKey: "AIzaSyD0JgGuqonnNw9ng9yhbQBkMnw8gwvb-V4",
             authDomain: "sistema-de-pontos-semanal.firebaseapp.com",
@@ -613,137 +560,80 @@
             appId: "1:496275393704:web:eadec1594b893fd15ec69d"
         };
 
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
         const dataRef = database.ref('formData');
-
         let isUpdatingFromFirebase = false;
+        let isReadOnly = false;
 
-        // --- LÓGICA DE PERMISSÃO ---
+        // --- LÓGICA DE PERMISSÃO E CONTROLES ---
         function applyPermissions() {
             const urlParams = new URLSearchParams(window.location.search);
             const user = urlParams.get('user');
 
             if (user && user.toLowerCase() === 'gabriel') {
+                isReadOnly = true;
                 document.getElementById('page-title').textContent = '🌟 Sistema de Pontos (Modo Leitura)';
                 document.querySelectorAll('#pontos-form input').forEach(input => {
-                    // Deixa os campos de cálculo (readonly) como estão, desabilita os outros
                     if (!input.readOnly) {
                         input.disabled = true;
                     }
                 });
+            } else {
+                // Mostra os controles de admin se não for modo leitura
+                document.getElementById('admin-controls').style.display = 'block';
             }
         }
 
-
-        // --- LÓGICA DE CÁLCULO ---
-        function calcularPontos() {
-            const tarefas = [
-                { name: "cama_", value: 3 }, { name: "quart_", value: 5 }, { name: "louca_", value: 5 },
-                { name: "lixo_", value: 3 }, { name: "varrer_", value: 4 }, { name: "sapatos_", value: 3 },
-                { name: "dobrar_", value: 4 }, { name: "banho_", value: 2 }, { name: "escova_", value: 2 },
-                { name: "licao_", value: 5 }, { name: "mochila_", value: 2 }, { name: "cachorras_", value: 3 },
-            ];
-            const positivas = [
-                { name: "ajudar", value: 5 }, { name: "gentil", value: 3 },
-                { name: "obedecer", value: 3 }, { name: "verdade", value: 5 },
-            ];
-            const penalidades = [
-                { name: "mentir", value: -10 }, { name: "desrespeitar", value: -8 }, { name: "brigar", value: -10 },
-                { name: "naolic", value: -8 }, { name: "baguncado", value: -5 }, { name: "birra", value: -5 },
-                { name: "eletronicos", value: -7 }, { name: "no_escova", value: -3 },
-            ];
-
-            let totalPontos = 0;
-            const pontosDiarios = { seg: 0, ter: 0, qua: 0, qui: 0, sex: 0, sab: 0, dom: 0 };
-
-            tarefas.forEach((item) => {
-                ["seg", "ter", "qua", "qui", "sex", "sab", "dom"].forEach((dia) => {
-                    const el = document.querySelector(`input[name="${item.name}${dia}"]`);
-                    if (el && el.checked) {
-                        totalPontos += item.value;
-                        pontosDiarios[dia] += item.value;
-                    }
-                });
-            });
-            positivas.forEach((item) => {
-                for (let i = 1; i <= 7; i++) {
-                    const el = document.querySelector(`input[name="${item.name}${i}"]`);
-                    if (el && el.checked) totalPontos += item.value;
-                }
-            });
-            penalidades.forEach((item) => {
-                for (let i = 1; i <= 7; i++) {
-                    const el = document.querySelector(`input[name="${item.name}${i}"]`);
-                    if (el && el.checked) totalPontos += item.value;
-                }
-            });
-
-            document.querySelector('input[name="total_pontos"]').value = totalPontos;
-            document.querySelector('input[name="pontos_semana"]').value = totalPontos;
-
-            for (const dia in pontosDiarios) {
-                const campoDia = document.querySelector(`input[name="${dia}_pontos"]`);
-                if (campoDia) campoDia.value = pontosDiarios[dia];
+        // --- LÓGICA DE LIMPEZA DE SEMANA ---
+        function resetWeek() {
+            const confirmation = confirm("Tem certeza que deseja limpar os dados da semana? Esta ação não pode ser desfeita.");
+            if (!confirmation) {
+                return;
             }
 
-            let valor = 0;
-            if (totalPontos >= 50) {
-                valor = 10 + Math.floor((totalPontos - 50) / 10) * 2;
-            } else if (totalPontos < 30) {
-                valor = 0;
-            }
-            document.querySelector('input[name="valor_conquistado"]').value = "€ " + valor.toFixed(2);
-
-            const preco = Number(document.querySelector('input[name="preco"]').value) || 0;
-            const ja_tenho = Number(document.querySelector('input[name="ja_tenho"]').value) || 0;
-            const ainda_preciso = preco - ja_tenho;
-            document.querySelector('input[name="ainda_preciso"]').value = ainda_preciso > 0 ? ainda_preciso.toFixed(2) : "0.00";
-        }
-
-        // --- LÓGICA DO FIREBASE ---
-
-        function saveDataToFirebase() {
-            if (isUpdatingFromFirebase) return;
-
-            const formData = {};
-            document.querySelectorAll('#pontos-form input').forEach(input => {
-                if (input.readOnly) return;
-
-                const name = input.name;
-                if (input.type === 'checkbox') {
-                    formData[name] = input.checked;
-                } else {
-                    formData[name] = input.value;
-                }
-            });
-            dataRef.set(formData);
-        }
-
-        function loadDataFromFirebase(data) {
-            isUpdatingFromFirebase = true;
-            for (const name in data) {
-                const input = document.querySelector(`#pontos-form input[name="${name}"]`);
+            const fieldsToKeep = ['dinheiro_acumulado', 'objetivo', 'preco', 'ja_tenho'];
+            const currentData = {};
+            fieldsToKeep.forEach(fieldName => {
+                const input = document.querySelector(`input[name="${fieldName}"]`);
                 if (input) {
-                    if (input.type === 'checkbox') {
-                        input.checked = data[name];
-                    } else {
-                        input.value = data[name];
-                    }
+                    currentData[fieldName] = input.value;
                 }
-            }
-            isUpdatingFromFirebase = false;
-            calcularPontos();
+            });
+
+            // Pega a data de hoje e formata como DD/MM/YYYY
+            const today = new Date();
+            const nextDate = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
+
+            const newData = { ...currentData, semana: nextDate };
+
+            // Define os novos dados no Firebase, efetivamente limpando o resto
+            dataRef.set(newData);
+        }
+
+
+        // --- LÓGICA DE CÁLCULO (sem alterações) ---
+        function calcularPontos() {
+            const tarefas = [{ name: "cama_", value: 3 }, { name: "quart_", value: 5 }, { name: "louca_", value: 5 }, { name: "lixo_", value: 3 }, { name: "varrer_", value: 4 }, { name: "sapatos_", value: 3 }, { name: "dobrar_", value: 4 }, { name: "banho_", value: 2 }, { name: "escova_", value: 2 }, { name: "licao_", value: 5 }, { name: "mochila_", value: 2 }, { name: "cachorras_", value: 3 },]; const positivas = [{ name: "ajudar", value: 5 }, { name: "gentil", value: 3 }, { name: "obedecer", value: 3 }, { name: "verdade", value: 5 },]; const penalidades = [{ name: "mentir", value: -10 }, { name: "desrespeitar", value: -8 }, { name: "brigar", value: -10 }, { name: "naolic", value: -8 }, { name: "baguncado", value: -5 }, { name: "birra", value: -5 }, { name: "eletronicos", value: -7 }, { name: "no_escova", value: -3 },]; let totalPontos = 0; const pontosDiarios = { seg: 0, ter: 0, qua: 0, qui: 0, sex: 0, sab: 0, dom: 0 }; tarefas.forEach((item) => { ["seg", "ter", "qua", "qui", "sex", "sab", "dom"].forEach((dia) => { const el = document.querySelector(`input[name="${item.name}${dia}"]`); if (el && el.checked) { totalPontos += item.value; pontosDiarios[dia] += item.value; } }); }); positivas.forEach((item) => { for (let i = 1; i <= 7; i++) { const el = document.querySelector(`input[name="${item.name}${i}"]`); if (el && el.checked) totalPontos += item.value; } }); penalidades.forEach((item) => { for (let i = 1; i <= 7; i++) { const el = document.querySelector(`input[name="${item.name}${i}"]`); if (el && el.checked) totalPontos += item.value; } }); document.querySelector('input[name="total_pontos"]').value = totalPontos; document.querySelector('input[name="pontos_semana"]').value = totalPontos; for (const dia in pontosDiarios) { const campoDia = document.querySelector(`input[name="${dia}_pontos"]`); if (campoDia) campoDia.value = pontosDiarios[dia]; }
+            let valor = 0; if (totalPontos >= 50) { valor = 10 + Math.floor((totalPontos - 50) / 10) * 2; } else if (totalPontos < 30) { valor = 0; }
+            document.querySelector('input[name="valor_conquistado"]').value = "€ " + valor.toFixed(2); const preco = Number(document.querySelector('input[name="preco"]').value) || 0; const ja_tenho = Number(document.querySelector('input[name="ja_tenho"]').value) || 0; const ainda_preciso = preco - ja_tenho; document.querySelector('input[name="ainda_preciso"]').value = ainda_preciso > 0 ? ainda_preciso.toFixed(2) : "0.00";
+        }
+
+        // --- LÓGICA DO FIREBASE (sem alterações) ---
+        function saveDataToFirebase() { if (isUpdatingFromFirebase) return; const formData = {}; document.querySelectorAll('#pontos-form input').forEach(input => { if (input.readOnly) return; const name = input.name; if (input.type === 'checkbox') { formData[name] = input.checked; } else { formData[name] = input.value; } }); dataRef.set(formData); }
+        function loadDataFromFirebase(data) {
+            isUpdatingFromFirebase = true; document.querySelectorAll('#pontos-form input[type="checkbox"]').forEach(cb => cb.checked = false); for (const name in data) { const input = document.querySelector(`#pontos-form input[name="${name}"]`); if (input) { if (input.type === 'checkbox') { input.checked = data[name]; } else { input.value = data[name]; } } }
+            isUpdatingFromFirebase = false; calcularPontos();
         }
 
         // --- INICIALIZAÇÃO ---
-
-        // Aplica as permissões ANTES de adicionar os listeners
         applyPermissions();
 
+        if (!isReadOnly) {
+            document.getElementById('reset-button').addEventListener('click', resetWeek);
+        }
+
         document.querySelectorAll('#pontos-form input').forEach(input => {
-            // Só adiciona listeners se o campo NÃO estiver desabilitado
             if (!input.disabled && !input.readOnly) {
                 input.addEventListener('change', saveDataToFirebase);
                 if (input.type !== 'checkbox') {
@@ -760,7 +650,6 @@
                 calcularPontos();
             }
         });
-
     </script>
 </body>
 
