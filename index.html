@@ -156,6 +156,46 @@
             color: #15620e;
             font-weight: bold;
         }
+
+        #login-section {
+            margin-bottom: 20px;
+            padding: 16px;
+            border: 1px solid #d1d1d1;
+            border-radius: 4px;
+            background: #fff;
+        }
+
+        #login-form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        #login-form input {
+            padding: 8px;
+            border: 1px solid #d1d1d1;
+            border-radius: 4px;
+        }
+
+        #login-form button,
+        #logout-button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            background: #0d6efd;
+            color: white;
+            cursor: pointer;
+        }
+
+        #login-form button:hover,
+        #logout-button:hover {
+            background: #0b5ed7;
+        }
+
+        #mensagem {
+            margin-top: 10px;
+            color: #3a6a34;
+        }
     </style>
 </head>
 
@@ -176,7 +216,6 @@
         <div id="pontos-form">
             <p>
                 <strong>Para: Gabriel</strong>
-
                 <strong>Semana começando em:</strong>
                 <input type="text" name="semana" placeholder="Data inicial" />
             </p>
@@ -186,7 +225,8 @@
                 <li><strong>Nível Bronze 🥉 (50+ pontos):</strong> 8,00 € de mesada</li><br>
                 <li><strong>Nível Prata 🥈 (80+ pontos):</strong> 10,00 € de mesada</li><br>
                 <li><strong>Nível Ouro 🥇 (110+ pontos):</strong> 12,00 € de mesada</li><br>
-                <li><strong>Bônus de Consistência ⭐:</strong> +3,00 € se fizer ao menos uma tarefa todos os dias!</li><br>
+                <li><strong>Bônus de Consistência ⭐:</strong> +3,00 € se fizer ao menos uma tarefa todos os dias!</li>
+                <br>
                 <li><strong>Abaixo de 50 pontos:</strong> Sem mesada na semana.</li>
             </ul><br>
 
@@ -521,7 +561,6 @@
                     </tr>
                 </tbody>
             </table>
-            
 
             <div id="admin-controls"
                 style="display: none; margin-top: 30px; border-top: 2px solid #ccc; padding-top: 20px;">
@@ -539,301 +578,309 @@
 
     <script>
         // --- CONFIGURAÇÃO E VARIÁVEIS GLOBAIS ---
-            // --- CONFIGURAÇÃO E VARIÁVEIS GLOBAIS ---
-                const firebaseConfig = {
-                    apiKey: "AIzaSyD0JgGuqonnNw9ng9yhbQBkMnw8gwvb-V4",
-                    authDomain: "sistema-de-pontos-semanal.firebaseapp.com",
-                    databaseURL: "https://sistema-de-pontos-semanal-default-rtdb.firebaseio.com",
-                    projectId: "sistema-de-pontos-semanal",
-                    storageBucket: "sistema-de-pontos-semanal.firebasestorage.app",
-                    messagingSenderId: "496275393704",
-                    appId: "1:496275393704:web:eadec1594b893fd15ec69d"
-                };
+        const firebaseConfig = {
+            apiKey: "AIzaSyD0JgGuqonnNw9ng9yhbQBkMnw8gwvb-V4",
+            authDomain: "sistema-de-pontos-semanal.firebaseapp.com",
+            databaseURL: "https://sistema-de-pontos-semanal-default-rtdb.firebaseio.com",
+            projectId: "sistema-de-pontos-semanal",
+            storageBucket: "sistema-de-pontos-semanal.firebasestorage.app",
+            messagingSenderId: "496275393704",
+            appId: "1:496275393704:web:eadec1594b893fd15ec69d"
+        };
 
-                firebase.initializeApp(firebaseConfig);
-                const auth = firebase.auth();
-                const database = firebase.database();
-                const dataRef = database.ref('formData');
-                let isUpdatingFromFirebase = false;
-                let isReadOnly = false;
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+        const dataRef = database.ref('formData');
+        let isUpdatingFromFirebase = false;
+        let isReadOnly = true;
 
-                const DIAS_SEMANA = ["seg", "ter", "qua", "qui", "sex", "sab", "dom"];
-                const TAREFAS_DIARIAS = [
-                    { name: "cama_", value: 3 }, { name: "quart_", value: 5 }, { name: "louca_", value: 5 },
-                    { name: "lixo_", value: 3 }, { name: "sapatos_", value: 3 }, { name: "dobrar_", value: 4 },
-                    { name: "cachorras_", value: 3 }, { name: "banho_", value: 2 }, { name: "escova_", value: 2 },
-                    { name: "licao_", value: 5 }, { name: "mochila_", value: 2 }
-                ];
-                const ATITUDES_POSITIVAS = [
-                    { name: "ajudar", value: 5 }, { name: "gentil", value: 3 },
-                    { name: "obedecer", value: 3 }, { name: "verdade", value: 5 }
-                ];
-                const PENALIDADES = [
-                    { name: "mentir", value: -20 }, { name: "desrespeitar", value: -15 }, { name: "brigar", value: -15 },
-                    { name: "naolic", value: -10 }, { name: "baguncado", value: -7 }, { name: "birra", value: -5 },
-                    { name: "eletronicos", value: -7 }, { name: "no_escova", value: -3 }
-                ];
+        const DIAS_SEMANA = ["seg", "ter", "qua", "qui", "sex", "sab", "dom"];
+        const TAREFAS_DIARIAS = [
+            { name: "cama_", value: 3 }, { name: "quart_", value: 5 }, { name: "louca_", value: 5 },
+            { name: "lixo_", value: 3 }, { name: "sapatos_", value: 3 }, { name: "dobrar_", value: 4 },
+            { name: "cachorras_", value: 3 }, { name: "banho_", value: 2 }, { name: "escova_", value: 2 },
+            { name: "licao_", value: 5 }, { name: "mochila_", value: 2 }
+        ];
+        const ATITUDES_POSITIVAS = [
+            { name: "ajudar", value: 5 }, { name: "gentil", value: 3 },
+            { name: "obedecer", value: 3 }, { name: "verdade", value: 5 }
+        ];
+        const PENALIDADES = [
+            { name: "mentir", value: -20 }, { name: "desrespeitar", value: -15 }, { name: "brigar", value: -15 },
+            { name: "naolic", value: -10 }, { name: "baguncado", value: -7 }, { name: "birra", value: -5 },
+            { name: "eletronicos", value: -7 }, { name: "no_escova", value: -3 }
+        ];
 
-                // --- LÓGICA DE AUTENTICAÇÃO ---
-                const loginSection = document.getElementById('login-section');
-                const loginForm = document.getElementById('login-form');
-                const logoutButton = document.getElementById('logout-button');
-                const mensagemDiv = document.getElementById('mensagem');
-                const adminControls = document.getElementById('admin-controls');
+        // --- LÓGICA DE AUTENTICAÇÃO ---
+        const loginSection = document.getElementById('login-section');
+        const loginForm = document.getElementById('login-form');
+        const logoutButton = document.getElementById('logout-button');
+        const mensagemDiv = document.getElementById('mensagem');
+        const adminControls = document.getElementById('admin-controls');
 
-                function updateUIForAuthState(user) {
-                    if (user) {
-                        // Usuário está logado
-                        loginSection.style.display = 'none';
-                        mensagemDiv.textContent = `Bem-vindo, ${user.email}!`;
-                        // Verifica se o usuário tem permissão de escrita (baseado nos UIDs permitidos)
-                        const allowedUIDs = ['seu-uid', 'uid-da-outra-pessoa']; // Substitua pelos UIDs reais
-                        if (allowedUIDs.includes(user.uid)) {
-                            isReadOnly = false;
-                            document.getElementById('page-title').textContent = '🌟 Sistema de Pontos Semanal (Admin)';
-                            adminControls.style.display = 'block';
-                            document.querySelectorAll('#pontos-form input').forEach(input => {
-                                if (!input.readOnly) input.disabled = false;
-                            });
-                        } else {
-                            isReadOnly = true;
-                            document.getElementById('page-title').textContent = '🌟 Sistema de Pontos (Modo Leitura)';
-                            document.querySelectorAll('#pontos-form input').forEach(input => {
-                                if (!input.readOnly) input.disabled = true;
-                            });
-                        }
-                        logoutButton.style.display = 'block';
-                    } else {
-                        // Usuário não está logado
-                        loginSection.style.display = 'block';
-                        logoutButton.style.display = 'none';
-                        mensagemDiv.textContent = '';
-                        isReadOnly = true;
-                        document.getElementById('page-title').textContent = '🌟 Sistema de Pontos (Modo Leitura)';
-                        adminControls.style.display = 'none';
-                        document.querySelectorAll('#pontos-form input').forEach(input => {
-                            if (!input.readOnly) input.disabled = true;
-                        });
-                    }
-                }
+        function updateUIForAuthState(user) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const isGabrielMode = urlParams.get('user')?.toLowerCase() === 'gabriel';
 
-                // Monitora o estado de autenticação
-                auth.onAuthStateChanged(user => {
-                    updateUIForAuthState(user);
-                });
+            if (user) {
+                // Usuário está logado
+                loginSection.style.display = 'none';
+                logoutButton.style.display = 'block';
+                mensagemDiv.textContent = `Bem-vindo, ${user.email}!`;
 
-                // Manipula o login
-                loginForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    const email = document.getElementById('email').value;
-                    const password = document.getElementById('password').value;
-
-                    auth.signInWithEmailAndPassword(email, password)
-                        .then(() => {
-                            mensagemDiv.textContent = 'Login bem-sucedido!';
-                        })
-                        .catch((error) => {
-                            mensagemDiv.textContent = `Erro ao fazer login: ${error.message}`;
-                        });
-                });
-
-                // Manipula o logout
-                logoutButton.addEventListener('click', () => {
-                    auth.signOut()
-                        .then(() => {
-                            mensagemDiv.textContent = 'Logout realizado com sucesso!';
-                        })
-                        .catch((error) => {
-                            mensagemDiv.textContent = `Erro ao fazer logout: ${error.message}`;
-                        });
-                });
-
-                // --- LÓGICA DE PERMISSÃO E CONTROLES ---
-                function applyPermissions() {
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const user = urlParams.get('user');
-                    if (user && user.toLowerCase() === 'gabriel' && !auth.currentUser) {
-                        isReadOnly = true;
-                        document.getElementById('page-title').textContent = '🌟 Sistema de Pontos (Modo Leitura)';
-                        document.querySelectorAll('#pontos-form input').forEach(input => {
-                            if (!input.readOnly) input.disabled = true;
-                        });
-                        loginSection.style.display = 'none';
-                    }
-                }
-
-                // --- LÓGICA DE LIMPEZA ---
-                function resetWeek() {
-                    if (!confirm("Tem certeza que deseja limpar os dados da semana? O valor conquistado será somado aos prêmios acumulados.")) return;
-
-                    const valorConquistado = parseFloat(document.querySelector('input[name="valor_conquistado"]').value.replace(/€/g, '').replace(/\(Bônus! ⭐\)/g, '').trim()) || 0;
-                    const premiosAcumuladosAtual = parseFloat(document.querySelector('input[name="premios_acumulados"]').value) || 0;
-
-                    const novosPremiosAcumulados = premiosAcumuladosAtual + valorConquistado;
-
-                    const fieldsToKeep = {
-                        premios_acumulados: novosPremiosAcumulados.toFixed(2),
-                        dinheiro_extra: document.querySelector('input[name="dinheiro_extra"]').value,
-                        objetivo: document.querySelector('input[name="objetivo"]').value,
-                        preco: document.querySelector('input[name="preco"]').value
-                    };
-
-                    const today = new Date();
-                    fieldsToKeep.semana = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
-
-                    dataRef.set(fieldsToKeep);
-                }
-
-                function resetFinancials() {
-                    if (!confirm("ATENÇÃO: Tem certeza que deseja ZERAR os 'Prêmios acumulados' e o 'Dinheiro extra'? Esta ação é recomendada apenas ao comprar um objetivo.")) return;
-
-                    dataRef.update({
-                        premios_acumulados: "0.00",
-                        dinheiro_extra: "0.00"
-                    });
-                }
-
-                // --- LÓGICA DE CÁLCULO ---
-                function calcularFinancas() {
-                    const premiosAcumulados = parseFloat(document.querySelector('input[name="premios_acumulados"]').value) || 0;
-                    const dinheiroExtra = parseFloat(document.querySelector('input[name="dinheiro_extra"]').value) || 0;
-                    const preco = parseFloat(document.querySelector('input[name="preco"]').value) || 0;
-
-                    const jaTenho = premiosAcumulados + dinheiroExtra;
-                    const aindaPreciso = preco - jaTenho;
-
-                    document.querySelector('input[name="ja_tenho"]').value = jaTenho.toFixed(2);
-                    document.querySelector('input[name="ainda_preciso"]').value = aindaPreciso > 0 ? aindaPreciso.toFixed(2) : "0.00";
-                }
-
-                function calcularPontos() {
-                    let totalPontos = 0;
-                    const pontosDiarios = { seg: 0, ter: 0, qua: 0, qui: 0, sex: 0, sab: 0, dom: 0 };
-                    const diasComTarefas = new Set();
-
-                    TAREFAS_DIARIAS.forEach(item => {
-                        DIAS_SEMANA.forEach(dia => {
-                            const el = document.querySelector(`input[name="${item.name}${dia}"]`);
-                            if (el && el.checked) {
-                                totalPontos += item.value;
-                                pontosDiarios[dia] += item.value;
-                                diasComTarefas.add(dia);
-                            }
-                        });
-                    });
-
-                    ATITUDES_POSITIVAS.forEach(item => {
-                        for (let i = 1; i <= 3; i++) {
-                            const el = document.querySelector(`input[name="${item.name}${i}"]`);
-                            if (el && el.checked) totalPontos += item.value;
-                        }
-                    });
-
-                    PENALIDADES.forEach(item => {
-                        for (let i = 1; i <= 3; i++) {
-                            const el = document.querySelector(`input[name="${item.name}${i}"]`);
-                            if (el && el.checked) totalPontos += item.value;
-                        }
-                    });
-
-                    document.querySelector('input[name="total_pontos"]').value = totalPontos;
-                    document.querySelector('input[name="pontos_semana"]').value = totalPontos;
-                    DIAS_SEMANA.forEach(dia => {
-                        const campoDia = document.querySelector(`input[name="${dia}_pontos"]`);
-                        if (campoDia) campoDia.value = pontosDiarios[dia];
-                    });
-
-                    let valorBase = 0;
-                    if (totalPontos >= 110) valorBase = 12;
-                    else if (totalPontos >= 80) valorBase = 10;
-                    else if (totalPontos >= 50) valorBase = 8;
-
-                    let bonusConsistencia = 0;
-                    if (diasComTarefas.size === 7) {
-                        bonusConsistencia = 3;
-                    }
-
-                    const valorFinal = valorBase + bonusConsistencia;
-                    let textoValor = `€ ${valorFinal.toFixed(2)}`;
-                    if (bonusConsistencia > 0) {
-                        textoValor += ` (Bônus! ⭐)`;
-                    }
-                    document.querySelector('input[name="valor_conquistado"]').value = textoValor;
-
-                    calcularFinancas();
-                }
-
-                // --- LÓGICA DO FIREBASE ---
-                function saveDataToFirebase() {
-                    if (isUpdatingFromFirebase || isReadOnly) return;
-                    const formData = {};
+                // Verifica se o usuário tem permissão de escrita
+                const allowedUIDs = ['sBLSGPs8T8b0Kw74akZtu19LtZs2', 'W8k7GLqXTGWqSKRHX9LEEulnxXl2']; // Substitua pelos UIDs reais
+                if (allowedUIDs.includes(user.uid)) {
+                    isReadOnly = false;
+                    document.getElementById('page-title').textContent = '🌟 Sistema de Pontos Semanal (Admin)';
+                    adminControls.style.display = 'block';
                     document.querySelectorAll('#pontos-form input').forEach(input => {
-                        if (input.readOnly) return;
-                        const name = input.name;
-                        if (input.type === 'checkbox') {
-                            formData[name] = input.checked;
-                        } else {
-                            formData[name] = input.value;
-                        }
+                        if (!input.readOnly) input.disabled = false;
                     });
-                    dataRef.set(formData).catch(error => {
-                        mensagemDiv.textContent = `Erro ao salvar no Firebase: ${error.message}`;
-                    });
-                }
-
-                function loadDataFromFirebase(data) {
-                    isUpdatingFromFirebase = true;
+                } else {
+                    isReadOnly = true;
+                    document.getElementById('page-title').textContent = '🌟 Sistema de Pontos (Modo Leitura)';
+                    adminControls.style.display = 'none';
                     document.querySelectorAll('#pontos-form input').forEach(input => {
-                        const name = input.name;
-                        if (data.hasOwnProperty(name)) {
-                            if (input.type === 'checkbox') {
-                                input.checked = data[name];
-                            } else {
-                                input.value = data[name];
-                            }
-                        } else {
-                            if (input.type === 'checkbox') {
-                                input.checked = false;
-                            }
-                        }
+                        if (!input.readOnly) input.disabled = true;
                     });
-                    isUpdatingFromFirebase = false;
-                    calcularPontos();
                 }
-
-                // --- INICIALIZAÇÃO ---
-                applyPermissions();
-
-                if (!isReadOnly) {
-                    document.getElementById('reset-button').addEventListener('click', resetWeek);
-                    document.getElementById('reset-financials-button').addEventListener('click', resetFinancials);
+            } else {
+                // Usuário não está logado
+                if (isGabrielMode) {
+                    loginSection.style.display = 'none';
+                    mensagemDiv.textContent = 'Modo leitura para Gabriel';
+                    document.getElementById('page-title').textContent = '🌟 Sistema de Pontos (Modo Leitura)';
+                    adminControls.style.display = 'none';
+                    document.querySelectorAll('#pontos-form input').forEach(input => {
+                        if (!input.readOnly) input.disabled = true;
+                    });
+                    isReadOnly = true;
+                } else {
+                    loginSection.style.display = 'block';
+                    logoutButton.style.display = 'none';
+                    mensagemDiv.textContent = 'Faça login para editar os dados.';
+                    document.getElementById('page-title').textContent = '🌟 Sistema de Pontos Semanal';
+                    adminControls.style.display = 'none';
+                    document.querySelectorAll('#pontos-form input').forEach(input => {
+                        if (!input.readOnly) input.disabled = true;
+                    });
+                    isReadOnly = true;
                 }
+            }
+        }
 
-                document.querySelectorAll('#pontos-form input').forEach(input => {
-                    if (!input.disabled && !input.readOnly) {
-                        const eventType = (input.type === 'checkbox' || input.type === 'number') ? 'change' : 'keyup';
-                        input.addEventListener(eventType, () => {
-                            if (eventType === 'keyup') {
-                                calcularPontos();
-                            } else {
-                                saveDataToFirebase();
-                                calcularPontos();
-                            }
-                        });
-                        if (input.type !== 'checkbox') {
-                            input.addEventListener('blur', saveDataToFirebase);
-                        }
+        // Monitora o estado de autenticação
+        auth.onAuthStateChanged(user => {
+            updateUIForAuthState(user);
+        });
+
+        // Manipula o login
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    mensagemDiv.textContent = 'Login bem-sucedido!';
+                })
+                .catch((error) => {
+                    mensagemDiv.textContent = `Erro ao fazer login: ${error.message}`;
+                });
+        });
+
+        // Manipula o logout
+        logoutButton.addEventListener('click', () => {
+            auth.signOut()
+                .then(() => {
+                    mensagemDiv.textContent = 'Logout realizado com sucesso!';
+                })
+                .catch((error) => {
+                    mensagemDiv.textContent = `Erro ao fazer logout: ${error.message}`;
+                });
+        });
+
+        // --- LÓGICA DE PERMISSÃO E CONTROLES ---
+        function applyPermissions() {
+            // Inicialmente, deixa a lógica de autenticação controlar a UI
+        }
+
+        // --- LÓGICA DE LIMPEZA ---
+        function resetWeek() {
+            if (!confirm("Tem certeza que deseja limpar os dados da semana? O valor conquistado será somado aos prêmios acumulados.")) return;
+
+            const valorConquistado = parseFloat(document.querySelector('input[name="valor_conquistado"]').value.replace(/€/g, '').replace(/\(Bônus! ⭐\)/g, '').trim()) || 0;
+            const premiosAcumuladosAtual = parseFloat(document.querySelector('input[name="premios_acumulados"]').value) || 0;
+
+            const novosPremiosAcumulados = premiosAcumuladosAtual + valorConquistado;
+
+            const fieldsToKeep = {
+                premios_acumulados: novosPremiosAcumulados.toFixed(2),
+                dinheiro_extra: document.querySelector('input[name="dinheiro_extra"]').value,
+                objetivo: document.querySelector('input[name="objetivo"]').value,
+                preco: document.querySelector('input[name="preco"]').value
+            };
+
+            const today = new Date();
+            fieldsToKeep.semana = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
+
+            dataRef.set(fieldsToKeep).catch(error => {
+                mensagemDiv.textContent = `Erro ao salvar no Firebase: ${error.message}`;
+            });
+        }
+
+        function resetFinancials() {
+            if (!confirm("ATENÇÃO: Tem certeza que deseja ZERAR os 'Prêmios acumulados' e o 'Dinheiro extra'? Esta ação é recomendada apenas ao comprar um objetivo.")) return;
+
+            dataRef.update({
+                premios_acumulados: "0.00",
+                dinheiro_extra: "0.00"
+            }).catch(error => {
+                mensagemDiv.textContent = `Erro ao salvar no Firebase: ${error.message}`;
+            });
+        }
+
+        // --- LÓGICA DE CÁLCULO ---
+        function calcularFinancas() {
+            const premiosAcumulados = parseFloat(document.querySelector('input[name="premios_acumulados"]').value) || 0;
+            const dinheiroExtra = parseFloat(document.querySelector('input[name="dinheiro_extra"]').value) || 0;
+            const preco = parseFloat(document.querySelector('input[name="preco"]').value) || 0;
+
+            const jaTenho = premiosAcumulados + dinheiroExtra;
+            const aindaPreciso = preco - jaTenho;
+
+            document.querySelector('input[name="ja_tenho"]').value = jaTenho.toFixed(2);
+            document.querySelector('input[name="ainda_preciso"]').value = aindaPreciso > 0 ? aindaPreciso.toFixed(2) : "0.00";
+        }
+
+        function calcularPontos() {
+            let totalPontos = 0;
+            const pontosDiarios = { seg: 0, ter: 0, qua: 0, qui: 0, sex: 0, sab: 0, dom: 0 };
+            const diasComTarefas = new Set();
+
+            TAREFAS_DIARIAS.forEach(item => {
+                DIAS_SEMANA.forEach(dia => {
+                    const el = document.querySelector(`input[name="${item.name}${dia}"]`);
+                    if (el && el.checked) {
+                        totalPontos += item.value;
+                        pontosDiarios[dia] += item.value;
+                        diasComTarefas.add(dia);
                     }
                 });
+            });
 
-                dataRef.on('value', (snapshot) => {
-                    const data = snapshot.val();
-                    if (data) {
-                        loadDataFromFirebase(data);
+            ATITUDES_POSITIVAS.forEach(item => {
+                for (let i = 1; i <= 3; i++) {
+                    const el = document.querySelector(`input[name="${item.name}${i}"]`);
+                    if (el && el.checked) totalPontos += item.value;
+                }
+            });
+
+            PENALIDADES.forEach(item => {
+                for (let i = 1; i <= 3; i++) {
+                    const el = document.querySelector(`input[name="${item.name}${i}"]`);
+                    if (el && el.checked) totalPontos += item.value;
+                }
+            });
+
+            document.querySelector('input[name="total_pontos"]').value = totalPontos;
+            document.querySelector('input[name="pontos_semana"]').value = totalPontos;
+            DIAS_SEMANA.forEach(dia => {
+                const campoDia = document.querySelector(`input[name="${dia}_pontos"]`);
+                if (campoDia) campoDia.value = pontosDiarios[dia];
+            });
+
+            let valorBase = 0;
+            if (totalPontos >= 110) valorBase = 12;
+            else if (totalPontos >= 80) valorBase = 10;
+            else if (totalPontos >= 50) valorBase = 8;
+
+            let bonusConsistencia = 0;
+            if (diasComTarefas.size === 7) {
+                bonusConsistencia = 3;
+            }
+
+            const valorFinal = valorBase + bonusConsistencia;
+            let textoValor = `€ ${valorFinal.toFixed(2)}`;
+            if (bonusConsistencia > 0) {
+                textoValor += ` (Bônus! ⭐)`;
+            }
+            document.querySelector('input[name="valor_conquistado"]').value = textoValor;
+
+            calcularFinancas();
+        }
+
+        // --- LÓGICA DO FIREBASE ---
+        function saveDataToFirebase() {
+            if (isUpdatingFromFirebase || isReadOnly) return;
+            const formData = {};
+            document.querySelectorAll('#pontos-form input').forEach(input => {
+                if (input.readOnly) return;
+                const name = input.name;
+                if (input.type === 'checkbox') {
+                    formData[name] = input.checked;
+                } else {
+                    formData[name] = input.value;
+                }
+            });
+            dataRef.set(formData).catch(error => {
+                mensagemDiv.textContent = `Erro ao salvar no Firebase: ${error.message}`;
+            });
+        }
+
+        function loadDataFromFirebase(data) {
+            isUpdatingFromFirebase = true;
+            document.querySelectorAll('#pontos-form input').forEach(input => {
+                const name = input.name;
+                if (data.hasOwnProperty(name)) {
+                    if (input.type === 'checkbox') {
+                        input.checked = data[name];
                     } else {
+                        input.value = data[name];
+                    }
+                } else {
+                    if (input.type === 'checkbox') {
+                        input.checked = false;
+                    }
+                }
+            });
+            isUpdatingFromFirebase = false;
+            calcularPontos();
+        }
+
+        // --- INICIALIZAÇÃO ---
+        applyPermissions();
+
+        document.getElementById('reset-button').addEventListener('click', resetWeek);
+        document.getElementById('reset-financials-button').addEventListener('click', resetFinancials);
+
+        document.querySelectorAll('#pontos-form input').forEach(input => {
+            if (!input.readOnly) {
+                const eventType = (input.type === 'checkbox' || input.type === 'number') ? 'change' : 'keyup';
+                input.addEventListener(eventType, () => {
+                    if (eventType === 'keyup') {
+                        calcularPontos();
+                    } else {
+                        saveDataToFirebase();
                         calcularPontos();
                     }
                 });
+                if (input.type !== 'checkbox') {
+                    input.addEventListener('blur', saveDataToFirebase);
+                }
+            }
+        });
+
+        dataRef.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                loadDataFromFirebase(data);
+            } else {
+                calcularPontos();
+            }
+        });
     </script>
 </body>
 
